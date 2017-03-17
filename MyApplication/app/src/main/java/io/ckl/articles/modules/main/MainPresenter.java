@@ -48,7 +48,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
     private void listArticles() {
-        view.showGreeting("Testing");
+        view.showGreeting("Testin a new functiong");
     }
 
     // end region
