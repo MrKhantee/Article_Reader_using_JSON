@@ -1,12 +1,16 @@
 package io.ckl.articles.modules.main;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.OnItemClick;
 import io.ckl.articles.R;
+import io.ckl.articles.models.Articles;
+import io.ckl.articles.models.ArticlesAdapter;
 import io.ckl.articles.modules.base.BaseActivity;
 
 /**
@@ -18,14 +22,25 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     MainInterfaces.Presenter presenter = new MainPresenter(this);
 
-    @BindView(R.id.greetingTextView)
-    TextView greetingTextView;
+//    @BindView(R.id.greetingTextView)
+//    TextView greetingTextView;
+    @BindView(R.id.listArticles)
+    ListView listArticles;
+
+    static ArticlesAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        ArrayList<Articles> arrayOfArticles = new ArrayList<>();
+
+        mAdapter = new ArticlesAdapter(this, arrayOfArticles);
+        listArticles.setAdapter(mAdapter);
+
         presenter.onCreate();
     }
 
@@ -42,20 +57,31 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     //region MainInterfaces.View
 
     @Override
-    public void showGreeting(String greeting) {
-        greetingTextView.setText(greeting);
+    public void fillList(Articles infoArticle) {
+        mAdapter.add(infoArticle);
     }
+
+//    @Override
+//    public void showGreeting(String greeting) {
+//        greetingTextView.setText(greeting);
+//    }
 
     //end region
 
 
     //region click listeners
 
-    @OnClick(R.id.greetButton)
-    public void onGreetButtonClicked() {
-        if (presenter == null) { return; }
-        presenter.onGreetButtonPressed();
-    }
+//    @OnClick(R.id.greetButton)
+//    public void onGreetButtonClicked() {
+//        if (presenter == null) { return; }
+//        presenter.onGreetButtonPressed();
+//    }
 
+    @OnItemClick(R.id.listArticles)
+    public void onItemClicked() {
+        //mAdapter.notifyDataSetChanged();
+        if (presenter == null) { return; }
+        presenter.onArticleListPressed();
+    }
     //end region
 }

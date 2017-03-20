@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="false"
+    android:overScrollMode="ifContentScrolls"
     tools:context="io.ckl.articles.modules.main.MainActivity">
 
-    <TextView
-        android:id="@+id/greetingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/this_is_a_greeting_textview"
-        android:textSize="30sp" />
-
-    <Button
-        android:id="@+id/greetButton"
+    <ListView
+        android:id="@+id/listArticles"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/greetingTextView"
-        android:layout_marginTop="8dp"
-        android:text="@string/greet_me" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1sp"
+        android:entries="@array/list_entries"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true" />
 
 </RelativeLayout>

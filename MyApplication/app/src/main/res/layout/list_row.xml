@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="5sp"
+    android:paddingBottom="20sp">
+
+    <!--  ListRow Left - Thumbnail image -->
+    <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="5sp"
+        android:layout_marginRight="5sp"
+        android:background="@android:color/white"
+        android:padding="3sp">
+
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+    </LinearLayout>
+
+    <!-- Title Of Article-->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/date"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toStartOf="@+id/date"
+        android:text="@string/articleTitle"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp" />
+    <!--android:typeface="sans"-->
+
+
+    <!-- Website of Article -->
+    <TextView
+        android:id="@+id/website"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="1sp"
+        android:layout_toEndOf="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="@string/articleWebsite"
+        android:textColor="#ff0000"
+        android:textSize="12sp" />
+
+    <!-- Date of Article -->
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="5sp"
+        android:layout_marginRight="5sp"
+        android:layout_centerVertical="true"
+        android:text="@string/articleDate"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Arrow to read Article -->
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:src="@android:drawable/ic_media_play" />-->
+
+</RelativeLayout>

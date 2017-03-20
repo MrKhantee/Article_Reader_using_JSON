@@ -1,5 +1,20 @@
 <resources>
-    <string name="app_name">Boilerplate</string>
+    <string name="app_name">Articles</string>
     <string name="this_is_a_greeting_textview">This is a greeting textview</string>
     <string name="greet_me">Greet Me!</string>
+
+    <!--ListView Default Strings-->
+    <string name="articleTitle">This is an Article Title</string>
+    <string name="articleWebsite">Cheesecake News</string>
+    <string name="articleDate">14/03/2017</string>
+    <string name="articleAuthor">Endy Silveira</string>
+
+    <string-array name="list_entries">
+        <item>Testing 0</item>
+        <item>Testing 1</item>
+        <item>Testing 2</item>
+        <item>Testing 3</item>
+        <item>Testing 4</item>
+        <item>Testing 5</item>
+    </string-array>
 </resources>
