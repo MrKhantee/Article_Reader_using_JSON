@@ -31,11 +31,13 @@ android {
 }
 
 ext {
-    supportLibraryVersion = '25.2.0'
+    supportLibraryVersion = '25.3.0'
     retrofitVersion = '2.2.0'
     okhttpVersion = '3.6.0'
     parcelablesVersion = '1.1.6'
     butterknifeVersion = '8.5.1'
+    picassoLibraryVersion = '2.5.2'
+    textViewAutoFitVersion = '0.2.1'
 }
 
 dependencies {
@@ -70,4 +72,8 @@ dependencies {
     //ReactiveX
     compile "io.reactivex.rxjava2:rxandroid:2.0.1"
     compile "io.reactivex.rxjava2:rxjava:2.0.7"
+    //Picasso
+    compile "com.squareup.picasso:picasso:$picassoLibraryVersion"
+    //TextView with AutoFit
+    compile "me.grantland:autofittextview:$textViewAutoFitVersion"
 }

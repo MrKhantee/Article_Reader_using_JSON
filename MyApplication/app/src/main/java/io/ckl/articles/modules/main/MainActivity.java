@@ -57,25 +57,14 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     //region MainInterfaces.View
 
     @Override
-    public void fillList(Articles infoArticle) {
-        mAdapter.add(infoArticle);
+    public void fillList(ArrayList<Articles> infoArticle) {
+        mAdapter.addAll(infoArticle);
     }
-
-//    @Override
-//    public void showGreeting(String greeting) {
-//        greetingTextView.setText(greeting);
-//    }
 
     //end region
 
 
     //region click listeners
-
-//    @OnClick(R.id.greetButton)
-//    public void onGreetButtonClicked() {
-//        if (presenter == null) { return; }
-//        presenter.onGreetButtonPressed();
-//    }
 
     @OnItemClick(R.id.listArticles)
     public void onItemClicked() {

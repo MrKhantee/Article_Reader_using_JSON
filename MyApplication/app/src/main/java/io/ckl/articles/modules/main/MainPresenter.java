@@ -1,8 +1,19 @@
 package io.ckl.articles.modules.main;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.ckl.articles.api_services.GreetingAPIService;
+import io.ckl.articles.api_services.RetrofitArrayAPI;
 import io.ckl.articles.models.Articles;
 import io.ckl.articles.models.Greeting;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * This is a example presenter.
@@ -16,9 +27,6 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     MainInterfaces.View view;
 
-    private String title, website, authors, date, art_content, label, imageUrl;
-    private Integer id;
-
     public MainPresenter(MainInterfaces.View view) {
         this.view = view;
     }
@@ -27,13 +35,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     @Override
     public void onCreate() {
-        greet();
         fillArays();
-    }
-
-    @Override
-    public void onGreetButtonPressed() {
-        greet();
     }
 
     @Override
@@ -52,33 +54,48 @@ public class MainPresenter implements MainInterfaces.Presenter {
     // region private
 
     private void fillArays() {
-        title = ("Obama Offers Hopeful Vision While Noting Nation's Fears");
-        website = ("MacStories");
-        authors = ("Graham Spencer");
-        date = ("05/26/2014");
-        art_content = ("In his last State of the Union address, President Obama sought to paint a" +
-                " hopeful portrait. But he acknowledged that many Americans felt shut out of a " +
-                "political and economic system they view as rigged.");
-        id = 1;
-        label = ("Politics");
-        imageUrl = ("http://res.cloudinary.com/cheesecakelabs/image/upload/v1488993901" +
-                "/challenge/news_01_illh01.jpg");
 
-        Articles testArticle = new Articles (title, website, authors, date, art_content,
-                label, imageUrl, id);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://www.ckl.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        view.fillList(testArticle);
+        RetrofitArrayAPI service = retrofit.create(RetrofitArrayAPI.class);
+
+        Call<List<Articles>> call = service.getArticlesDetails();
+
+        call.enqueue(new Callback<List<Articles>>() {
+            @Override
+            public void onResponse(Call<List<Articles>> call, Response<List<Articles>> response) {
+                try {
+
+                    ArrayList<Articles> newArticles = new ArrayList<>();
+
+                    List<Articles> StudentData = response.body();
+
+                    for (int i = 0; i < StudentData.size(); i++) {
+                        newArticles.add(StudentData.get(i));
+                    }
+
+                    view.fillList(newArticles);
+
+                } catch (Exception e) {
+                    Log.d("onResponse", "There is an error");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Articles>> call, Throwable t) {
+                Log.d("onCall", t.toString());
+            }
+        });
+
     }
 
-
-    private void greet() {
-        Greeting greeting = GreetingAPIService.fetchGreeting();
-        if (view == null) { return; }
-        //view.showGreeting(greeting.getContent());
-    }
 
     private void listArticles() {
-        fillArays();
+//        fillArays();
         //view.showGreeting("Testing a new functiong");
     }
 
