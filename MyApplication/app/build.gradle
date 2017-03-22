@@ -38,6 +38,7 @@ ext {
     butterknifeVersion = '8.5.1'
     picassoLibraryVersion = '2.5.2'
     textViewAutoFitVersion = '0.2.1'
+    swipeListViewVersion = '1.2.0'
 }
 
 dependencies {
@@ -76,4 +77,6 @@ dependencies {
     compile "com.squareup.picasso:picasso:$picassoLibraryVersion"
     //TextView with AutoFit
     compile "me.grantland:autofittextview:$textViewAutoFitVersion"
+    //SwipeListView
+    compile "com.daimajia.swipelayout:library:$swipeListViewVersion"
 }

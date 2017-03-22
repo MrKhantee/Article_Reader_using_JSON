@@ -3,6 +3,8 @@ package io.ckl.articles.modules.main;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.daimajia.swipe.SwipeLayout;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -22,8 +24,6 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     MainInterfaces.Presenter presenter = new MainPresenter(this);
 
-//    @BindView(R.id.greetingTextView)
-//    TextView greetingTextView;
     @BindView(R.id.listArticles)
     ListView listArticles;
 
