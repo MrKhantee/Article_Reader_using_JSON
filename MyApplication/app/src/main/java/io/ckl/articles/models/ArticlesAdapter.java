@@ -1,12 +1,17 @@
 package io.ckl.articles.models;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -25,9 +30,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
 
     private Context context;
     private ArrayList<Articles> data;
-    private static int counterList = 0;
-    private static int sizeListView = 150;
-
+    
     private static LayoutInflater inflater;
 
     public ArticlesAdapter(Context context, ArrayList<Articles> d)
@@ -47,25 +50,59 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_row, null, true);
 
-            SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipe_layout);
+            int sizeListView = 150;
+
+            SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipeLayout);
             swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
             TextView titleView          = (TextView) convertView.findViewById(R.id.title);
             TextView webView            = (TextView) convertView.findViewById(R.id.website);
             TextView dateView           = (TextView) convertView.findViewById(R.id.date);
-            ImageView thumb_imageView   = (ImageView)convertView.findViewById(R.id.article_image);
+            ImageView thumbImageView    = (ImageView)convertView.findViewById(R.id.article_image);
+            CheckBox  checkView         = (CheckBox) convertView.findViewById(R.id.check_query);
+            LinearLayout llView         = (LinearLayout) convertView.findViewById(R.id.bottomWrapper);
 
             // Setting all values in listview
-            titleView.setText(this.data.get(counterList).getTitle());
-            webView.setText(this.data.get(counterList).getWebsite());
-            dateView.setText(this.data.get(counterList).getDate());
-            Log.d("PicassoURL", "Message : " + this.data.get(counterList).getImageUrl());
-            Picasso.with(context).load(this.data.get(counterList).getImageUrl()).
-                    resize(sizeListView, sizeListView).centerCrop().into(thumb_imageView);
+            titleView.setText(this.data.get(position).getTitle());
+            dateView.setText(this.data.get(position).getDate());
+            webView.setText(this.data.get(position).getWebsite());
+            Picasso.with(context).load(this.data.get(position).getImageUrl()).
+                    resize(sizeListView, sizeListView).centerCrop().into(thumbImageView);
 
-            if (counterList < 5) {
-                counterList++;
-            }
+            llView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkView.setChecked(!checkView.isChecked());
+                }
+            });
+
+            checkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked)
+                    {
+                        titleView.setTextColor(Color.GRAY);
+                        webView.setTextColor(Color.GRAY);
+                        dateView.setTextColor(Color.GRAY);
+
+                        // Apply grayscale filter
+                        ColorMatrix matrix = new ColorMatrix();
+                        matrix.setSaturation(0);
+                        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                        thumbImageView.setColorFilter(filter);
+                        thumbImageView.setImageAlpha(128);
+                    }
+                    else
+                    {
+                        titleView.setTextColor(Color.BLACK);
+                        webView.setTextColor(Color.RED);
+                        dateView.setTextColor(Color.BLACK);
+                        thumbImageView.setColorFilter(null);
+                        thumbImageView.setImageAlpha(255);
+                    }
+
+                }
+            });
         }
 
         return convertView;
@@ -74,6 +111,6 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
     //return the SwipeLayout resource id in the layout.
     @Override
     public int getSwipeLayoutResourceId(int position){
-        return R.id.swipe_layout;
+        return R.id.swipeLayout;
     }
 }

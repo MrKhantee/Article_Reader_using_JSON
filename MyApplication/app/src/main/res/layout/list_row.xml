@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--Bottom View Start-->
 
     <LinearLayout
-        android:id="@+id/bottom_wrapper"
+        android:id="@+id/bottomWrapper"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
+        android:background="@color/colorPrimary"
         android:layout_gravity="end">
 
         <RelativeLayout
@@ -18,12 +20,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/edit_query"
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/check_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@android:drawable/checkbox_on_background" />
+                app:buttonTint="@android:color/black"
+                android:text="@string/read"
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -31,6 +34,7 @@
 
     <!--Surface View Start-->
     <RelativeLayout
+        android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:autofit="http://schemas.android.com/apk/res-auto"
@@ -72,7 +76,7 @@
             android:layout_marginRight="5sp"
             android:layout_marginEnd="5sp"
             android:text="@string/articleTitle"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@android:color/black"
             android:textSize="19sp"
             android:maxLines="4"
             android:textStyle="bold"
@@ -99,7 +103,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="5sp"
             android:layout_marginRight="5sp"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@id/thumbnail"
             android:text="@string/articleDate"
             android:textColor="@android:color/black"
             android:textSize="10sp"/>

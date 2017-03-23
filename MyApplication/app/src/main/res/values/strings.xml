@@ -8,6 +8,8 @@
     <string name="articleWebsite">Cheesecake News</string>
     <string name="articleDate">14/03/2017</string>
     <string name="articleAuthor">Endy Silveira</string>
+    <!--CheckBox Default Strings-->
+    <string name="read">Read</string>
 
     <string-array name="list_entries">
         <item>Testing 0</item>
