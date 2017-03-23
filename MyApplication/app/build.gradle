@@ -47,7 +47,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:'
-    testCompile 'junit:junit:4.12'
 
     //Here's some suggested dependencies, but feel free to mix things up
 
@@ -66,17 +65,19 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
     compile "com.android.support:percent:$supportLibraryVersion"
     //Font support in xml
-    compile "uk.co.chrisjenx:calligraphy:2.2.0"
     //Injection
     compile "com.jakewharton:butterknife:$butterknifeVersion"
     apt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     //ReactiveX
-    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
-    compile "io.reactivex.rxjava2:rxjava:2.0.7"
     //Picasso
     compile "com.squareup.picasso:picasso:$picassoLibraryVersion"
     //TextView with AutoFit
     compile "me.grantland:autofittextview:$textViewAutoFitVersion"
     //SwipeListView
     compile "com.daimajia.swipelayout:library:$swipeListViewVersion"
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 }

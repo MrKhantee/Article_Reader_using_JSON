@@ -1,4 +1,4 @@
-package io.ckl.articles.models;
+package io.ckl.articles.api_services;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,8 +19,11 @@ import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import io.ckl.articles.R;
+import io.ckl.articles.models.Articles;
 
 /**
  * Created by Endy on 18/03/2017.
@@ -30,15 +33,15 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
 
     private Context context;
     private ArrayList<Articles> data;
-    
+
     private static LayoutInflater inflater;
 
     public ArticlesAdapter(Context context, ArrayList<Articles> d)
     {
         super(context, 0, d);
 
-        this.data = d;
-        this.context        = context;
+        this.data    = d;
+        this.context = context;
     }
 
 
@@ -48,9 +51,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_row, null, true);
-
-            int sizeListView = 150;
+            convertView = inflater.inflate(R.layout.list_row, null);
 
             SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipeLayout);
             swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
@@ -66,8 +67,8 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             titleView.setText(this.data.get(position).getTitle());
             dateView.setText(this.data.get(position).getDate());
             webView.setText(this.data.get(position).getWebsite());
-            Picasso.with(context).load(this.data.get(position).getImageUrl()).
-                    resize(sizeListView, sizeListView).centerCrop().into(thumbImageView);
+            Picasso.with(context).load(this.data.get(position).getImageUrl()).fit().centerInside()
+                    .into(thumbImageView);
 
             llView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,4 +114,6 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
     public int getSwipeLayoutResourceId(int position){
         return R.id.swipeLayout;
     }
+
+
 }

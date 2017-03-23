@@ -51,13 +51,15 @@
             android:layout_alignParentStart="true"
             android:layout_marginEnd="5sp"
             android:layout_marginRight="5sp"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:padding="3sp">
 
             <ImageView
                 android:id="@+id/article_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
+                android:background="@android:color/background_light"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/ic_launcher" />
 
         </LinearLayout>

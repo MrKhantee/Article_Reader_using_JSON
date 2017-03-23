@@ -19,4 +19,16 @@
         <item>Testing 4</item>
         <item>Testing 5</item>
     </string-array>
+
+    <!--Article Read View Default Strings-->
+    <string name="readLabel">Tech</string>
+    <string name="readTitle">New Amazing App Developed in Brazil</string>
+    <string name="readDate">14/03/2017</string>
+    <string name="readAuthor">Writen by: Endy Silveira</string>
+    <string name="readWebsite">Original from: Cheesecake News</string>
+    <string name="readContent">Released in the Play Store early this year, a new
+        revolutionary app allows you to read offline Articles that are available online!
+        Check it out!
+    </string>
+
 </resources>

@@ -5,10 +5,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.ckl.articles.api_services.GreetingAPIService;
 import io.ckl.articles.api_services.RetrofitArrayAPI;
 import io.ckl.articles.models.Articles;
-import io.ckl.articles.models.Greeting;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,12 +33,12 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     @Override
     public void onCreate() {
-        fillArays();
+        fillArrays();
     }
 
     @Override
     public void onArticleListPressed() {
-        listArticles();
+        showArticles();
     }
 
     @Override
@@ -53,7 +51,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     // region private
 
-    private void fillArays() {
+    private void fillArrays() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.ckl.io/")
@@ -94,8 +92,10 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-    private void listArticles() {
-//        fillArays();
+    private void showArticles() {
+
+
+//        fillArrays();
         //view.showGreeting("Testing a new functiong");
     }
 

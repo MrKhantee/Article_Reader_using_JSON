@@ -1,19 +1,24 @@
 package io.ckl.articles.modules.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.daimajia.swipe.SwipeLayout;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import io.ckl.articles.R;
 import io.ckl.articles.models.Articles;
-import io.ckl.articles.models.ArticlesAdapter;
+import io.ckl.articles.api_services.ArticlesAdapter;
 import io.ckl.articles.modules.base.BaseActivity;
+import io.ckl.articles.modules.read.ReadActivity;
 
 /**
  * This activity implements the View protocol.
@@ -27,8 +32,8 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @BindView(R.id.listArticles)
     ListView listArticles;
 
-    static ArticlesAdapter mAdapter;
-
+    ArrayList<Articles> arrayOfArticles = new ArrayList<>();
+    private ArticlesAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,10 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ArrayList<Articles> arrayOfArticles = new ArrayList<>();
-
         mAdapter = new ArticlesAdapter(this, arrayOfArticles);
         listArticles.setAdapter(mAdapter);
+
+        Log.d("onMain", "Created!");
 
         presenter.onCreate();
     }
@@ -53,12 +58,25 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        Log.d("onMain", "Resumed!");
+        super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        Log.d("onMain", "Resulted!");
+    }
+
 
     //region MainInterfaces.View
 
     @Override
     public void fillList(ArrayList<Articles> infoArticle) {
-        mAdapter.addAll(infoArticle);
+        if (infoArticle.isEmpty()) { return; }
+        arrayOfArticles.addAll(infoArticle);
+        mAdapter.notifyDataSetChanged();
     }
 
     //end region
@@ -67,10 +85,21 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     //region click listeners
 
     @OnItemClick(R.id.listArticles)
-    public void onItemClicked() {
-        //mAdapter.notifyDataSetChanged();
+    public void onItemClicked(AdapterView<?> adapter, View v, int position,
+                              long arg3) {
         if (presenter == null) { return; }
-        presenter.onArticleListPressed();
+
+        Intent i = new Intent(this, ReadActivity.class);
+        Articles articleToRead = (Articles) mAdapter.getItem(position);
+        i.putExtra("Label", articleToRead.getTags().get(0).getLabel());
+        i.putExtra("Title", articleToRead.getTitle());
+        i.putExtra("Image", articleToRead.getImageUrl());
+        i.putExtra("Date", articleToRead.getDate());
+        i.putExtra("Author", articleToRead.getAuthors());
+        i.putExtra("Website", articleToRead.getWebsite());
+        i.putExtra("Content", articleToRead.getContent());
+
+        startActivityForResult(i, position);
     }
     //end region
 }

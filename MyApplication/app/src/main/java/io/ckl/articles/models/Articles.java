@@ -7,17 +7,17 @@ import java.util.List;
  */
 
 public class Articles {
-    private String title, website, authors, date, art_content, image_url;
+    private String title, website, authors, date, content, image_url;
     private List<Tags> tags;
 
-    public Articles (String title, String website, String authors, String date, String art_content,
+    public Articles (String title, String website, String authors, String date, String content,
                      String image_url, List<Tags> tags)
     {
         this.title          = title;
         this.website        = website;
         this.authors        = authors;
         this.date           = date;
-        this.art_content    = art_content;
+        this.content    = content;
         this.image_url       = image_url;
         this.tags           = tags;
     }
@@ -39,7 +39,7 @@ public class Articles {
     }
 
     public String getContent() {
-        return art_content;
+        return content;
     }
 
     public List<Tags> getTags() {
@@ -67,7 +67,7 @@ public class Articles {
     }
 
     public void setContent(String art_content) {
-        this.art_content = art_content;
+        this.content = art_content;
     }
 
     public void setTags(List<Tags> tags) {
