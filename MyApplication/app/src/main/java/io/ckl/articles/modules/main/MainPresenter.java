@@ -1,5 +1,6 @@
 package io.ckl.articles.modules.main;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -36,9 +37,6 @@ public class MainPresenter implements MainInterfaces.Presenter {
         this.view = view;
     }
 
-    private static final int sortDateTag = 0, sortWebsiteTag = 1, sortLabelTag = 2,
-            sortTitleTag = 3, sortAuthorTag = 4;
-
     // region MainInterfaces.Presenter
 
     @Override
@@ -47,8 +45,8 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
     @Override
-    public void onArticleListPressed(int sortType) {
-        sortArticles(sortType);
+    public void onArticleListPressed(String sortType, boolean decreasing) {
+        sortArticles(sortType, decreasing);
     }
 
     @Override
@@ -81,7 +79,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
                         arrayArticles.add(StudentData.get(i));
                     }
 
-                    sortArticles(sortDateTag);
+                    sortArticles(view.getCont().getString(R.string.menuSortDate), false);
 
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
@@ -98,30 +96,40 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-    private void sortArticles(int sortType) {
+    private void sortArticles(String sortType, boolean decreasing) {
         Collections.sort(arrayArticles, new Comparator<Articles>() {
             @Override
             public int compare(Articles o1, Articles o2) {
 
-                switch (sortType) {
-                    case sortWebsiteTag:
-                        return o1.getWebsite().compareTo(o2.getWebsite());
-                    case sortLabelTag:
-                        return o1.getTags().get(0).getLabel().
-                                compareTo(o2.getTags().get(0).getLabel());
-                    case sortTitleTag:
-                        return o1.getTitle().compareTo(o2.getTitle());
-                    case sortAuthorTag:
-                        return o1.getAuthors().compareTo(o2.getAuthors());
-                    default:
-                        return o1.getDate().compareTo(o2.getDate());
+                if (decreasing) {
+                    Articles temp = o1;
+                    o1 = o2;
+                    o2 = temp;
+                }
+
+                if (sortType.equals(view.getCont().getString(R.string.menuSortWebsite)))
+                {
+                    return o1.getWebsite().compareTo(o2.getWebsite());
+                }
+                else if (sortType.equals(view.getCont().getString(R.string.menuSortLabel)))
+                {
+                    return o1.getTags().get(0).getLabel().compareTo(o2.getTags().get(0).getLabel());
+                }
+                else if (sortType.equals(view.getCont().getString(R.string.menuSortTitle)))
+                {
+                    return o1.getTitle().compareTo(o2.getTitle());
+                }
+                else if (sortType.equals(view.getCont().getString(R.string.menuSortAuthor)))
+                {
+                    return o1.getAuthors().compareTo(o2.getAuthors());
+                }
+                else  // If date, do the invert to get the newest (the higher date) first
+                {
+                    return o2.getDate().compareTo(o1.getDate());
                 }
             }
         });
 
-        for (int i = 0; i < arrayArticles.size(); i++) {
-            Log.d("onSort", "Sorting : (" + String.valueOf(i) + ") - " + arrayArticles.get(i).getTitle());
-        }
         view.fillList(arrayArticles);
     }
 

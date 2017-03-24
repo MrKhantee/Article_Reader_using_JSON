@@ -63,6 +63,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             CheckBox  checkView         = (CheckBox) convertView.findViewById(R.id.check_query);
             LinearLayout llView         = (LinearLayout) convertView.findViewById(R.id.bottomWrapper);
 
+    // This can be modified when develop the DataBase
             // Setting all values in listview
             titleView.setText(this.data.get(position).getTitle());
             dateView.setText(this.data.get(position).getDate());

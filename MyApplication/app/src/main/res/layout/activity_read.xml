@@ -23,9 +23,12 @@
                 android:layout_height="wrap_content"
                 android:padding="10sp"
                 android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:text="@string/readTitle" />
+        <!--android:textAppearance="@android:style/TextAppearance.Material.Headline"-->
 
             <ImageView
                 android:id="@+id/readImage"
@@ -48,8 +51,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/readDate"
                     android:layout_gravity="end"
-                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:textSize="14sp"
                     android:textColor="@android:color/black" />
+        <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
 
                 <TextView
                     android:id="@+id/readAuthor"
@@ -71,15 +75,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10sp"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@android:color/black"
                 android:text="@string/readContent" />
+        <!--android:textAppearance="@android:style/TextAppearance.Material.Title"-->
 
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/readMark" />
+            <!--<CheckBox-->
+                <!--android:id="@+id/checkBox2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:checked="false"-->
+                <!--android:text="@string/readMark" />-->
 
         </LinearLayout>
     </ScrollView>

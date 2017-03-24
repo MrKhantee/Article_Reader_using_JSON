@@ -46,8 +46,8 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
                 .into(readImage);
 
         readDate.setText(getIntent().getStringExtra("Date"));
-        readAuthor.setText("Writen by: " + getIntent().getStringExtra("Author"));
-        readWebsite.setText("Original from: " + getIntent().getStringExtra("Website"));
+        readAuthor.setText(getIntent().getStringExtra("Author"));
+        readWebsite.setText(getIntent().getStringExtra("Website"));
 
         readContent.setText(getIntent().getStringExtra("Content"));
 

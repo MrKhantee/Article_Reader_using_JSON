@@ -41,5 +41,7 @@
     <string name="menuSortAuthor">Author</string>
     <string name="menuSortDate">Date</string>
     <string name="menuSortLabel">Labels</string>
+    <string name="menuSortIncreasing">Increasing</string>
+    <string name="menuSortDecreasing">Decreasing</string>
 
 </resources>

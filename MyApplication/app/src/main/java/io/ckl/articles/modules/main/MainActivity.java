@@ -1,7 +1,9 @@
 package io.ckl.articles.modules.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import butterknife.Optional;
 import io.ckl.articles.R;
 import io.ckl.articles.api_services.ArticlesAdapter;
 import io.ckl.articles.models.Articles;
@@ -35,8 +38,11 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     ArrayList<Articles> arrayOfArticles = new ArrayList<>();
     private ArticlesAdapter mAdapter;
 
-    private static final int sortDateTag = 0, sortWebsiteTag = 1, sortLabelTag = 2,
-            sortTitleTag = 3, sortAuthorTag = 4;
+    private MenuItem menuSort;
+    private MenuItem sortDecrease;
+
+    private String actualSortStringTag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,34 +74,48 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.sortDecrease = menu.findItem(R.id.sortDec);
+        this.menuSort     = menu.findItem(R.id.menuSort);
 
-        MenuItem defaultSort = (MenuItem) findViewById(R.id.sortDate);
+    // This can be modified when develop the DataBase
+        actualSortStringTag = getResources().getString(R.string.menuSortDate);
+        String menuModeStr = " (I)";
+        if (sortDecrease.isChecked()) {
+            menuModeStr = " (D)";
+        }
 
+        menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
+                actualSortStringTag + menuModeStr);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        item.setChecked(true);
+        if (item != menuSort) {
+            item.setChecked(!item.isChecked());
+
+            if (item != sortDecrease)
+            {
+                actualSortStringTag = item.getTitle().toString();
+            }
+
+            String menuModeStr = " (I)";
+            if (sortDecrease.isChecked()) {
+                menuModeStr = " (D)";
+            }
+
+            menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
+                    actualSortStringTag + menuModeStr);
+
+        }
+
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.sortDate:
-                presenter.onArticleListPressed(sortDateTag);
-                return true;
-            case R.id.sortWebsite:
-                presenter.onArticleListPressed(sortWebsiteTag);
-                return true;
-            case R.id.sortLabel:
-                presenter.onArticleListPressed(sortLabelTag);
-                return true;
-            case R.id.sortTitle:
-                presenter.onArticleListPressed(sortTitleTag);
-                return true;
-            case R.id.sortAuthor:
-                presenter.onArticleListPressed(sortAuthorTag);
-                return true;
-            default:
+            case R.id.menuSort:
                 return super.onOptionsItemSelected(item);
+            default:
+                presenter.onArticleListPressed(actualSortStringTag, sortDecrease.isChecked());
+                return true;
         }
     }
 
@@ -103,7 +123,6 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         Log.d("onMain", "Resulted!");
     }
-
 
     //region MainInterfaces.View
 
@@ -116,6 +135,11 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         listArticles.setAdapter(mAdapter);
 
         setTitle(getResources().getString(R.string.app_name) + " (" + arrayOfArticles.size() + ")");
+    }
+
+    @Override
+    public Context getCont() {
+        return this;
     }
 
     //end region
