@@ -8,11 +8,10 @@ import io.ckl.articles.modules.base.BaseInterfaces;
 public class MainInterfaces {
 
     public interface Presenter extends BaseInterfaces.Presenter {
-        void onArticleListPressed();
+        void onArticleListPressed(int sortType);
     }
 
     public interface View extends BaseInterfaces.View {
-        //void showGreeting(String greeting);
         void fillList(ArrayList<Articles> infoArticle);
     }
 

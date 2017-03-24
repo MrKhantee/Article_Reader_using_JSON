@@ -1,10 +1,15 @@
 package io.ckl.articles.modules.main;
 
 import android.util.Log;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.StringJoiner;
 
+import io.ckl.articles.R;
 import io.ckl.articles.api_services.RetrofitArrayAPI;
 import io.ckl.articles.models.Articles;
 import retrofit2.Call;
@@ -25,9 +30,14 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     MainInterfaces.View view;
 
+    ArrayList<Articles> arrayArticles = new ArrayList<>();
+
     public MainPresenter(MainInterfaces.View view) {
         this.view = view;
     }
+
+    private static final int sortDateTag = 0, sortWebsiteTag = 1, sortLabelTag = 2,
+            sortTitleTag = 3, sortAuthorTag = 4;
 
     // region MainInterfaces.Presenter
 
@@ -37,8 +47,8 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
     @Override
-    public void onArticleListPressed() {
-        showArticles();
+    public void onArticleListPressed(int sortType) {
+        sortArticles(sortType);
     }
 
     @Override
@@ -52,7 +62,6 @@ public class MainPresenter implements MainInterfaces.Presenter {
     // region private
 
     private void fillArrays() {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.ckl.io/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -66,16 +75,13 @@ public class MainPresenter implements MainInterfaces.Presenter {
             @Override
             public void onResponse(Call<List<Articles>> call, Response<List<Articles>> response) {
                 try {
-
-                    ArrayList<Articles> newArticles = new ArrayList<>();
-
                     List<Articles> StudentData = response.body();
 
                     for (int i = 0; i < StudentData.size(); i++) {
-                        newArticles.add(StudentData.get(i));
+                        arrayArticles.add(StudentData.get(i));
                     }
 
-                    view.fillList(newArticles);
+                    sortArticles(sortDateTag);
 
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
@@ -92,11 +98,31 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-    private void showArticles() {
+    private void sortArticles(int sortType) {
+        Collections.sort(arrayArticles, new Comparator<Articles>() {
+            @Override
+            public int compare(Articles o1, Articles o2) {
 
+                switch (sortType) {
+                    case sortWebsiteTag:
+                        return o1.getWebsite().compareTo(o2.getWebsite());
+                    case sortLabelTag:
+                        return o1.getTags().get(0).getLabel().
+                                compareTo(o2.getTags().get(0).getLabel());
+                    case sortTitleTag:
+                        return o1.getTitle().compareTo(o2.getTitle());
+                    case sortAuthorTag:
+                        return o1.getAuthors().compareTo(o2.getAuthors());
+                    default:
+                        return o1.getDate().compareTo(o2.getDate());
+                }
+            }
+        });
 
-//        fillArrays();
-        //view.showGreeting("Testing a new functiong");
+        for (int i = 0; i < arrayArticles.size(); i++) {
+            Log.d("onSort", "Sorting : (" + String.valueOf(i) + ") - " + arrayArticles.get(i).getTitle());
+        }
+        view.fillList(arrayArticles);
     }
 
     // end region

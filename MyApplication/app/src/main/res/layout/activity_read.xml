@@ -74,6 +74,13 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:text="@string/readContent" />
 
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/readMark" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

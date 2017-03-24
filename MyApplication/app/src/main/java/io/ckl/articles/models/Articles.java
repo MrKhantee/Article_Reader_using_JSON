@@ -17,8 +17,8 @@ public class Articles {
         this.website        = website;
         this.authors        = authors;
         this.date           = date;
-        this.content    = content;
-        this.image_url       = image_url;
+        this.content        = content;
+        this.image_url      = image_url;
         this.tags           = tags;
     }
 

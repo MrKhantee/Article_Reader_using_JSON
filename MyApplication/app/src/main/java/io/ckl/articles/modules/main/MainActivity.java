@@ -3,20 +3,20 @@ package io.ckl.articles.modules.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import io.ckl.articles.R;
-import io.ckl.articles.models.Articles;
 import io.ckl.articles.api_services.ArticlesAdapter;
+import io.ckl.articles.models.Articles;
 import io.ckl.articles.modules.base.BaseActivity;
 import io.ckl.articles.modules.read.ReadActivity;
 
@@ -35,6 +35,9 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     ArrayList<Articles> arrayOfArticles = new ArrayList<>();
     private ArticlesAdapter mAdapter;
 
+    private static final int sortDateTag = 0, sortWebsiteTag = 1, sortLabelTag = 2,
+            sortTitleTag = 3, sortAuthorTag = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +46,6 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
         mAdapter = new ArticlesAdapter(this, arrayOfArticles);
         listArticles.setAdapter(mAdapter);
-
-        Log.d("onMain", "Created!");
 
         presenter.onCreate();
     }
@@ -65,6 +66,40 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem defaultSort = (MenuItem) findViewById(R.id.sortDate);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        item.setChecked(true);
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.sortDate:
+                presenter.onArticleListPressed(sortDateTag);
+                return true;
+            case R.id.sortWebsite:
+                presenter.onArticleListPressed(sortWebsiteTag);
+                return true;
+            case R.id.sortLabel:
+                presenter.onArticleListPressed(sortLabelTag);
+                return true;
+            case R.id.sortTitle:
+                presenter.onArticleListPressed(sortTitleTag);
+                return true;
+            case R.id.sortAuthor:
+                presenter.onArticleListPressed(sortAuthorTag);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         Log.d("onMain", "Resulted!");
     }
@@ -75,8 +110,12 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @Override
     public void fillList(ArrayList<Articles> infoArticle) {
         if (infoArticle.isEmpty()) { return; }
+        arrayOfArticles.clear();
         arrayOfArticles.addAll(infoArticle);
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
+        listArticles.setAdapter(mAdapter);
+
+        setTitle(getResources().getString(R.string.app_name) + " (" + arrayOfArticles.size() + ")");
     }
 
     //end region
@@ -95,8 +134,8 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         i.putExtra("Title", articleToRead.getTitle());
         i.putExtra("Image", articleToRead.getImageUrl());
         i.putExtra("Date", articleToRead.getDate());
-        i.putExtra("Author", articleToRead.getAuthors());
-        i.putExtra("Website", articleToRead.getWebsite());
+        i.putExtra("Author", getResources().getString(R.string.readWriten) + articleToRead.getAuthors());
+        i.putExtra("Website", getResources().getString(R.string.readOriginal) + articleToRead.getWebsite());
         i.putExtra("Content", articleToRead.getContent());
 
         startActivityForResult(i, position);
