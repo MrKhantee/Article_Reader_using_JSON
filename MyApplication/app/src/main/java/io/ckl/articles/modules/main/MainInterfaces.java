@@ -11,11 +11,13 @@ public class MainInterfaces {
 
     public interface Presenter extends BaseInterfaces.Presenter {
         void onArticleListPressed(String sortType, boolean decreasing);
+
     }
 
     public interface View extends BaseInterfaces.View {
         void fillList(ArrayList<Articles> infoArticle);
-        Context getCont();
+        void setMenuTitle(String sortBy, boolean sortDec);
+        Context getViewContext();
     }
 
 }

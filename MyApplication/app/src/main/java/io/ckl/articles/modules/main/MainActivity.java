@@ -3,10 +3,10 @@ package io.ckl.articles.modules.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import butterknife.Optional;
 import io.ckl.articles.R;
 import io.ckl.articles.api_services.ArticlesAdapter;
 import io.ckl.articles.models.Articles;
 import io.ckl.articles.modules.base.BaseActivity;
 import io.ckl.articles.modules.read.ReadActivity;
+import io.realm.Realm;
 
 /**
  * This activity implements the View protocol.
@@ -43,10 +43,12 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     private String actualSortStringTag;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -74,18 +76,10 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         this.sortDecrease = menu.findItem(R.id.sortDec);
         this.menuSort     = menu.findItem(R.id.menuSort);
 
-    // This can be modified when develop the DataBase
-        actualSortStringTag = getResources().getString(R.string.menuSortDate);
-        String menuModeStr = " (I)";
-        if (sortDecrease.isChecked()) {
-            menuModeStr = " (D)";
-        }
-
-        menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
-                actualSortStringTag + menuModeStr);
         return true;
     }
 
@@ -94,19 +88,11 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         if (item != menuSort) {
             item.setChecked(!item.isChecked());
 
-            if (item != sortDecrease)
-            {
+            if (item != sortDecrease) {
                 actualSortStringTag = item.getTitle().toString();
             }
 
-            String menuModeStr = " (I)";
-            if (sortDecrease.isChecked()) {
-                menuModeStr = " (D)";
-            }
-
-            menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
-                    actualSortStringTag + menuModeStr);
-
+            setMenuTitle(actualSortStringTag, sortDecrease.isChecked());
         }
 
         // Handle item selection
@@ -127,6 +113,27 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     //region MainInterfaces.View
 
     @Override
+    public void setMenuTitle(String sortBy, boolean sortDec)
+    {
+        String menuModeStr = " (I)";
+        if (sortDec) {
+            menuModeStr = " (D)";
+        }
+
+        actualSortStringTag = sortBy;
+
+        menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
+                actualSortStringTag + menuModeStr);
+
+        SubMenu sub = menuSort.getSubMenu();
+        for (int j = 0; j < sub.size(); j++) {
+            if (sub.getItem(j).getTitle().toString().compareTo(actualSortStringTag) == 0) {
+                sub.getItem(j).setChecked(true);
+            }
+        }
+    }
+
+    @Override
     public void fillList(ArrayList<Articles> infoArticle) {
         if (infoArticle.isEmpty()) { return; }
         arrayOfArticles.clear();
@@ -138,7 +145,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     }
 
     @Override
-    public Context getCont() {
+    public Context getViewContext() {
         return this;
     }
 

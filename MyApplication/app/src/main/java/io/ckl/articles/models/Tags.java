@@ -2,14 +2,20 @@ package io.ckl.articles.models;
 
 import android.content.Context;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Endy on 20/03/2017.
  */
 
-public class Tags {
+public class Tags extends RealmObject {
 
     private int id;
     private String label;
+
+    public Tags () {
+
+    }
 
     public Tags (int id, String label)
     {

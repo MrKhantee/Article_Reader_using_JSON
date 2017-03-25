@@ -34,14 +34,17 @@
     </string>
     <string name="readMark">Mark as Read</string>
 
-    <!--Menu Default Strings-->
+    <!--Sorting Menu Default Strings-->
     <string name="menuSortBy">Sort by</string>
     <string name="menuSortTitle">Title</string>
     <string name="menuSortWebsite">Website</string>
     <string name="menuSortAuthor">Author</string>
     <string name="menuSortDate">Date</string>
     <string name="menuSortLabel">Labels</string>
-    <string name="menuSortIncreasing">Increasing</string>
-    <string name="menuSortDecreasing">Decreasing</string>
+    <string name="menuSortDescending">Descending</string>
+    <!--Sorting Preference Strings-->
+    <string name="prefFile">sortPref</string>
+    <string name="prefKeySortBy">sortBy</string>
+    <string name="prefKeySortDesc">sortOrder</string>
 
 </resources>

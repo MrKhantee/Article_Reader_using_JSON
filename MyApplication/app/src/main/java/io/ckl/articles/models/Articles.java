@@ -2,16 +2,23 @@ package io.ckl.articles.models;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
 /**
  * Created by Endy on 18/03/2017.
  */
 
-public class Articles {
+public class Articles extends RealmObject{
     private String title, website, authors, date, content, image_url;
-    private List<Tags> tags;
+    private RealmList<Tags> tags;
+
+    public Articles () {
+
+    }
 
     public Articles (String title, String website, String authors, String date, String content,
-                     String image_url, List<Tags> tags)
+                     String image_url, RealmList<Tags> tags)
     {
         this.title          = title;
         this.website        = website;
@@ -70,7 +77,7 @@ public class Articles {
         this.content = art_content;
     }
 
-    public void setTags(List<Tags> tags) {
+    public void setTags(RealmList<Tags> tags) {
         this.tags = tags;
     }
 
