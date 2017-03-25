@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import com.daimajia.swipe.adapters.ArraySwipeAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import io.ckl.articles.R;
 import io.ckl.articles.models.Articles;
@@ -57,7 +54,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
             TextView titleView          = (TextView) convertView.findViewById(R.id.title);
-            TextView webView            = (TextView) convertView.findViewById(R.id.website);
+            TextView authorView         = (TextView) convertView.findViewById(R.id.author);
             TextView dateView           = (TextView) convertView.findViewById(R.id.date);
             ImageView thumbImageView    = (ImageView)convertView.findViewById(R.id.article_image);
             CheckBox  checkView         = (CheckBox) convertView.findViewById(R.id.check_query);
@@ -67,7 +64,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             // Setting all values in listview
             titleView.setText(this.data.get(position).getTitle());
             dateView.setText(this.data.get(position).getDate());
-            webView.setText(this.data.get(position).getWebsite());
+            authorView.setText(this.data.get(position).getAuthors());
             Picasso.with(context).load(this.data.get(position).getImageUrl()).fit().centerInside()
                     .into(thumbImageView);
 
@@ -84,7 +81,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
                     if (isChecked)
                     {
                         titleView.setTextColor(Color.GRAY);
-                        webView.setTextColor(Color.GRAY);
+                        authorView.setTextColor(Color.GRAY);
                         dateView.setTextColor(Color.GRAY);
 
                         // Apply grayscale filter
@@ -97,7 +94,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
                     else
                     {
                         titleView.setTextColor(Color.BLACK);
-                        webView.setTextColor(Color.RED);
+                        authorView.setTextColor(Color.RED);
                         dateView.setTextColor(Color.BLACK);
                         thumbImageView.setColorFilter(null);
                         thumbImageView.setImageAlpha(255);

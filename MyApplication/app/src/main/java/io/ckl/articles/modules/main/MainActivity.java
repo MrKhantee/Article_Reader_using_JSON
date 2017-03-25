@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     private ArticlesAdapter mAdapter;
 
     private MenuItem menuSort;
-    private MenuItem sortDecrease;
+    private MenuItem menuDecrease;
 
     private String actualSortStringTag;
 
@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     @Override
     protected void onResume() {
-        Log.d("onMain", "Resumed!");
+        Log.d("eonMain", "Resumed!");
         super.onResume();
     }
 
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        this.sortDecrease = menu.findItem(R.id.sortDec);
+        this.menuDecrease = menu.findItem(R.id.sortDec);
         this.menuSort     = menu.findItem(R.id.menuSort);
 
         return true;
@@ -88,11 +88,10 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         if (item != menuSort) {
             item.setChecked(!item.isChecked());
 
-            if (item != sortDecrease) {
+            if (item != menuDecrease) {
                 actualSortStringTag = item.getTitle().toString();
             }
-
-            setMenuTitle(actualSortStringTag, sortDecrease.isChecked());
+            setMenuTitle(actualSortStringTag, menuDecrease.isChecked());
         }
 
         // Handle item selection
@@ -100,7 +99,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
             case R.id.menuSort:
                 return super.onOptionsItemSelected(item);
             default:
-                presenter.onArticleListPressed(actualSortStringTag, sortDecrease.isChecked());
+                presenter.onArticleListPressed(actualSortStringTag, menuDecrease.isChecked());
                 return true;
         }
     }
@@ -115,7 +114,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @Override
     public void setMenuTitle(String sortBy, boolean sortDec)
     {
-        String menuModeStr = " (I)";
+        String menuModeStr = " (A)";
         if (sortDec) {
             menuModeStr = " (D)";
         }
@@ -125,10 +124,13 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
                 actualSortStringTag + menuModeStr);
 
-        SubMenu sub = menuSort.getSubMenu();
-        for (int j = 0; j < sub.size(); j++) {
-            if (sub.getItem(j).getTitle().toString().compareTo(actualSortStringTag) == 0) {
-                sub.getItem(j).setChecked(true);
+        menuDecrease.setChecked(sortDec);
+        if (menuSort.hasSubMenu()) {
+            SubMenu sub = menuSort.getSubMenu();
+            for (int j = 0; j < sub.size(); j++) {
+                if (sub.getItem(j).getTitle().toString().compareTo(actualSortStringTag) == 0) {
+                    sub.getItem(j).setChecked(true);
+                }
             }
         }
     }
@@ -138,7 +140,6 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         if (infoArticle.isEmpty()) { return; }
         arrayOfArticles.clear();
         arrayOfArticles.addAll(infoArticle);
-        //mAdapter.notifyDataSetChanged();
         listArticles.setAdapter(mAdapter);
 
         setTitle(getResources().getString(R.string.app_name) + " (" + arrayOfArticles.size() + ")");

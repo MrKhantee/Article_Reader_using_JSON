@@ -19,5 +19,4 @@ public class MainInterfaces {
         void setMenuTitle(String sortBy, boolean sortDec);
         Context getViewContext();
     }
-
 }
