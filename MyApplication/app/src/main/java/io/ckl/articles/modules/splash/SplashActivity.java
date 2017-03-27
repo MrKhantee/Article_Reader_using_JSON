@@ -1,5 +1,6 @@
 package io.ckl.articles.modules.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,14 +15,24 @@ public class SplashActivity extends BaseActivity implements SplashInterfaces.Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        //setContentView(R.layout.activity_splash);
 
         splashPresenter.onCreate();
     }
+
+    //region MainInterfaces.View
 
     @Override
     public void startMainActivity()
     {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
+
+    @Override
+    public Context getViewContext() {
+        return this;
+    }
+
+    //end region
 }

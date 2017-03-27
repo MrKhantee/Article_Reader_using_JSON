@@ -18,5 +18,6 @@ public class SplashInterfaces {
 
     public interface View extends BaseInterfaces.View {
         void startMainActivity();
+        Context getViewContext();
     }
 }

@@ -21,7 +21,6 @@ import io.ckl.articles.api_services.ArticlesAdapter;
 import io.ckl.articles.models.Articles;
 import io.ckl.articles.modules.base.BaseActivity;
 import io.ckl.articles.modules.read.ReadActivity;
-import io.realm.Realm;
 
 /**
  * This activity implements the View protocol.
@@ -47,15 +46,13 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Realm.init(this);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         mAdapter = new ArticlesAdapter(this, arrayOfArticles);
         listArticles.setAdapter(mAdapter);
 
-        presenter.onCreate();
+//        presenter.onCreate();
     }
 
     @Override
@@ -80,6 +77,8 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         this.menuDecrease = menu.findItem(R.id.sortDec);
         this.menuSort     = menu.findItem(R.id.menuSort);
 
+        presenter.onCreate();           // Moved here because of the time of execution
+                                        // Was too fast to load the Title of Menu Sort
         return true;
     }
 
