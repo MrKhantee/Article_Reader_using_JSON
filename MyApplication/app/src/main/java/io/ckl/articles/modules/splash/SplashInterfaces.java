@@ -1,10 +1,5 @@
 package io.ckl.articles.modules.splash;
 
-import android.content.Context;
-
-import java.util.ArrayList;
-
-import io.ckl.articles.models.Articles;
 import io.ckl.articles.modules.base.BaseInterfaces;
 
 /**
@@ -18,6 +13,5 @@ public class SplashInterfaces {
 
     public interface View extends BaseInterfaces.View {
         void startMainActivity();
-        Context getViewContext();
     }
 }

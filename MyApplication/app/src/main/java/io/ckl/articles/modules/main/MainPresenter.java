@@ -41,8 +41,6 @@ public class MainPresenter implements MainInterfaces.Presenter {
         mainPresenterContext = view.getViewContext();
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-
-        // Create a new empty instance of Realm
         realm = Realm.getInstance(realmConfiguration);
 
         sortPref = mainPresenterContext.getSharedPreferences(
@@ -78,7 +76,6 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-
     private void sortArticles(String sortType, boolean decreasing) {
         Collections.sort(arrayArticles, new Comparator<Articles>() {
             @Override
@@ -92,7 +89,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
                 if (sortType.equals(mainPresenterContext.getString(R.string.menuSortWebsite)))
                 {
-                    return o1.getWebsite().compareTo(o2.getWebsite());
+                    return o1.getWebsite().compareToIgnoreCase(o2.getWebsite());
                 }
                 else if (sortType.equals(mainPresenterContext.getString(R.string.menuSortLabel)))
                 {

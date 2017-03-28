@@ -47,4 +47,8 @@
     <string name="prefKeySortBy">sortBy</string>
     <string name="prefKeySortDesc">sortOrder</string>
 
+    <!--SplashScreen Default Strings-->
+    <string name="downloadingString">Downloading</string>
+
+
 </resources>

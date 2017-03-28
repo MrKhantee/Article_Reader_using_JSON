@@ -1,6 +1,5 @@
 package io.ckl.articles.modules.splash;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.Collection;
@@ -8,6 +7,7 @@ import java.util.List;
 
 import io.ckl.articles.api_services.RetrofitArrayAPI;
 import io.ckl.articles.models.Articles;
+import io.ckl.articles.modules.read.ReadInterfaces;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import retrofit2.Call;
@@ -24,8 +24,6 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
 
     SplashInterfaces.View splashView;
 
-    Context splashPresenterContext;
-
     private Realm realm;
 
     public SplashPresenter(SplashInterfaces.View splashView) {
@@ -36,18 +34,13 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
 
     @Override
     public void onCreate() {
-        splashPresenterContext = splashView.getViewContext();
-
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-
-        // Create a new empty instance of Realm
         realm = Realm.getInstance(realmConfiguration);
 
         Log.d("onSplash", "Started!");
 
         downloadArticles();
     }
-
 
     @Override
     public void onDestroy() {
@@ -81,10 +74,9 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
                         realm.beginTransaction();
                         Collection<Articles> realmArticles = realm.copyToRealm(StudentData);
                         realm.commitTransaction();
-                        Log.d("onResponse", "Downloaded");
+                        Log.d("onResponse", "Downloading");
                     }
 
-                    Log.d("onLoading", "Flag Download true");
                     splashView.startMainActivity();
 
                 } catch (Exception e) {
