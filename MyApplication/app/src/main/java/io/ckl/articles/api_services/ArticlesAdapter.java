@@ -68,8 +68,9 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             titleView.setText(this.data.get(position).getTitle());
             dateView.setText(this.data.get(position).getDate());
             authorView.setText(this.data.get(position).getAuthors());
+            Picasso.with(context).setIndicatorsEnabled(true);
             Picasso.with(context).load(this.data.get(position).getImageUrl()).fit().centerInside()
-                    .into(thumbImageView);
+                        .into(thumbImageView);
 
 
             // Set the ClickListener for the entire Layout of the Read Checkbox to allow the user

@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -42,8 +43,10 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         setTitle(getIntent().getStringExtra("Label"));
         readTitle.setText(getIntent().getStringExtra("Title"));
 
-        Picasso.with(this).load(getIntent().getStringExtra("Image")).fit().centerInside()
-                .into(readImage);
+    // There's no need to retry to download the Image, so the OFFLINE option can be used
+        Picasso.with(this).setIndicatorsEnabled(true);
+        Picasso.with(this).load(getIntent().getStringExtra("Image")).networkPolicy(NetworkPolicy.OFFLINE)
+                .fit().centerInside().into(readImage);
 
         readDate.setText(getIntent().getStringExtra("Date"));
         readAuthor.setText(getIntent().getStringExtra("Author"));
