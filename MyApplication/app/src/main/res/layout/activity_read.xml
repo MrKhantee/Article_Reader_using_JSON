@@ -20,7 +20,7 @@
                 android:id="@+id/readTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10sp"
+                android:padding="8sp"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:fontFamily="sans-serif"
@@ -42,39 +42,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="10sp">
+                android:padding="8sp">
 
                 <TextView
                     android:id="@+id/readDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/readDate"
                     android:layout_gravity="end"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black" />
-        <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
+                    android:text="@string/readDate"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+                <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
 
                 <TextView
                     android:id="@+id/readAuthor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/readAuthor"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/readWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/readWebsite"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/readContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:textSize="20sp"
+                android:padding="8sp"
+                android:textSize="24sp"
                 android:textColor="@android:color/black"
                 android:text="@string/readContent" />
         <!--android:textAppearance="@android:style/TextAppearance.Material.Title"-->
@@ -93,7 +95,7 @@
                     android:checked="false"
                     android:buttonTint="@android:color/white"
                     android:text="@string/readMark"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"/>
             </LinearLayout>

@@ -1,5 +1,7 @@
 package io.ckl.articles.modules.splash;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -16,9 +18,6 @@ public class SplashActivity extends BaseActivity implements SplashInterfaces.Vie
 
     SplashInterfaces.Presenter splashPresenter = new SplashPresenter(this);
 
-    //@BindView(R.id.downloadingDots)
-    AVLoadingIndicatorView downloadingDots;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +32,10 @@ public class SplashActivity extends BaseActivity implements SplashInterfaces.Vie
     public void startMainActivity()
     {
         View rootView = findViewById(R.id.splashLayout);
-        startActivity(new Intent(this, MainActivity.class), ActivityOptions.
-                makeCustomAnimation(this, R.anim.main_in, R.anim.splash_out).toBundle());
+
+        startActivity(new Intent(this, MainActivity.class));
+
+        overridePendingTransition(R.anim.main_in, R.anim.splash_out);
         finish();
     }
 

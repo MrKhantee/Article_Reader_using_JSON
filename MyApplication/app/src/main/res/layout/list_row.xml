@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/bottomWrapper"
-        android:layout_width="100dp"
+        android:layout_width="96sp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@color/colorPrimary"
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/read"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -63,15 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="5sp"
-            android:layout_marginRight="5sp"
             android:background="@android:color/transparent"
-            android:padding="3sp">
+            android:padding="4sp">
 
             <ImageView
                 android:id="@+id/article_image"
-                android:layout_width="100sp"
-                android:layout_height="95sp"
+                android:layout_width="104sp"
+                android:layout_height="96sp"
                 android:background="@android:color/background_light"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/ic_launcher" />
@@ -88,8 +86,10 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:layout_alignParentRight="true"
             android:layout_above="@+id/date"
-            android:layout_marginRight="5sp"
-            android:layout_marginEnd="5sp"
+            android:paddingEnd="4sp"
+            android:paddingRight="4sp"
+            android:paddingStart="4sp"
+            android:paddingLeft="4sp"
             android:text="@string/articleTitle"
             android:textColor="@android:color/black"
             android:textSize="17sp"

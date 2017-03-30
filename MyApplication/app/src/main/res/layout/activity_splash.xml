@@ -8,23 +8,13 @@
     tools:context="io.ckl.articles.modules.splash.SplashActivity">
 
 
-    <TextView
-        android:id="@+id/downloadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/downloadingDots"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorAccent"
-        android:textSize="36sp"
-        android:text="@string/downloadingString" />
-
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/downloadingDots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="72sp"
+        android:layout_marginBottom="16sp"
         app:indicatorColor="@color/colorAccent"
         app:indicatorName="BallPulseIndicator" />
 </RelativeLayout>
