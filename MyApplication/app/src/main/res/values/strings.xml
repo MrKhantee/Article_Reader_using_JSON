@@ -24,9 +24,9 @@
     <string name="readLabel">Tech</string>
     <string name="readTitle">New Amazing App Developed in Brazil</string>
     <string name="readDate">14/03/2017</string>
-    <string name="readWriten">Writen by: </string>
+    <string name="readWriten">Writen by:&#160;</string>
     <string name="readAuthor">Endy Silveira</string>
-    <string name="readOriginal">Original from: </string>
+    <string name="readOriginal">Original from:&#160;</string>
     <string name="readWebsite">Cheesecake News</string>
     <string name="readContent">Released in the Play Store early this year, a new
         revolutionary app allows you to read offline Articles that are available online!
@@ -35,7 +35,7 @@
     <string name="readMark">Mark as Read</string>
 
     <!--Sorting Menu Default Strings-->
-    <string name="menuSortBy">Sort by</string>
+    <string name="menuSortBy">Sort by&#160;</string>
     <string name="menuSortTitle">Title</string>
     <string name="menuSortWebsite">Website</string>
     <string name="menuSortAuthor">Author</string>

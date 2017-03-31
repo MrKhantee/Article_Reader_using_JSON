@@ -67,8 +67,8 @@
 
             <ImageView
                 android:id="@+id/article_image"
-                android:layout_width="104sp"
-                android:layout_height="96sp"
+                android:layout_width="80sp"
+                android:layout_height="72sp"
                 android:background="@android:color/background_light"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/ic_launcher" />
@@ -92,7 +92,7 @@
             android:text="@string/articleTitle"
             android:textColor="@android:color/black"
             android:textSize="17sp"
-            android:maxLines="3"
+            android:maxLines="2"
             android:textStyle="bold"/>
 
         <!-- Website of Article -->

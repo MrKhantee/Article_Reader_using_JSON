@@ -1,8 +1,10 @@
 package io.ckl.articles.modules.read;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +46,6 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         readTitle.setText(getIntent().getStringExtra("Title"));
 
     // There's no need to retry to download the Image, so the OFFLINE option can be used
-        Picasso.with(this).setIndicatorsEnabled(true);
         Picasso.with(this).load(getIntent().getStringExtra("Image")).networkPolicy(NetworkPolicy.OFFLINE)
                 .fit().centerInside().into(readImage);
 
@@ -65,6 +66,13 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         readPresenter = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Log.d("onConfChanged", "Read Changed!");
     }
 
     @Override

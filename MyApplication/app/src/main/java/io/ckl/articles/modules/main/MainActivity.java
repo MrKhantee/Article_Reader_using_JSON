@@ -2,6 +2,7 @@ package io.ckl.articles.modules.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         ButterKnife.bind(this);
 
         mAdapter = new ArticlesAdapter(this, arrayOfArticles);
-        listArticles.setAdapter(mAdapter);
+        //listArticles.setAdapter(mAdapter);
 
 //        presenter.onCreate();
     }
@@ -66,8 +67,16 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     @Override
     protected void onResume() {
-        Log.d("eonMain", "Resumed!");
+        Log.d("onMain", "Resumed!");
         super.onResume();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        listArticles.setAdapter(mAdapter);
+        Log.d("onConfChanged", "Main Changed!");
     }
 
     @Override
@@ -120,7 +129,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
         actualSortStringTag = sortBy;
 
-        menuSort.setTitle(getResources().getString(R.string.menuSortBy) + " " +
+        menuSort.setTitle(getResources().getString(R.string.menuSortBy) +
                 actualSortStringTag + menuModeStr);
 
         menuDecrease.setChecked(sortDec);
@@ -160,6 +169,9 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         if (presenter == null) { return; }
 
         Intent i = new Intent(this, ReadActivity.class);
+
+        Log.d("onItemClicked", "Position: " + String.valueOf(position));
+
         Articles articleToRead = (Articles) mAdapter.getItem(position);
         i.putExtra("Label", articleToRead.getTags().get(0).getLabel());
         i.putExtra("Title", articleToRead.getTitle());
