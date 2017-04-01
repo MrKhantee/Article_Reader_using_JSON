@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import io.ckl.articles.R;
 import io.ckl.articles.modules.base.BaseActivity;
@@ -16,7 +17,6 @@ public class SplashActivity extends BaseActivity implements SplashInterfaces.Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
 
         splashPresenter.onCreate();
     }
@@ -29,6 +29,21 @@ public class SplashActivity extends BaseActivity implements SplashInterfaces.Vie
     }
 
     //region MainInterfaces.View
+
+    @Override
+    public void startDownloadAnimation() {
+        // Start the Downloading layout - with 3 dots animation
+        setContentView(R.layout.activity_splash_downloading);
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        // Start the Downloading layout - with 3 dots animation
+        setContentView(R.layout.activity_splash_error);
+
+        TextView errorText = (TextView) findViewById(R.id.errorText);
+        errorText.append(errorMessage);
+    }
 
     @Override
     public void startMainActivity()

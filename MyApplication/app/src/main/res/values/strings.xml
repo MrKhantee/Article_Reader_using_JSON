@@ -48,7 +48,7 @@
     <string name="prefKeySortDesc">sortOrder</string>
 
     <!--SplashScreen Default Strings-->
-    <string name="downloadingString">Downloading</string>
+    <string name="errorString">Error:\n</string>
 
 
 </resources>
