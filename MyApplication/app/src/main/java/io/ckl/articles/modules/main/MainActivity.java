@@ -1,15 +1,19 @@
 package io.ckl.articles.modules.main;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -37,6 +41,9 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     ArrayList<Articles> arrayOfArticles = new ArrayList<>();
     private ArticlesAdapter mAdapter;
+
+    private int readRequestCode = 10;
+    private int positionReadArticle = 0;
 
     private MenuItem menuSort;
     private MenuItem menuDecrease;
@@ -76,7 +83,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         super.onConfigurationChanged(newConfig);
 
         listArticles.setAdapter(mAdapter);
-        Log.d("onConfChanged", "Main Changed!");
+        Log.d("onMain", "Conf Changed!");
     }
 
     @Override
@@ -115,6 +122,18 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         Log.d("onMain", "Resulted!");
+        if (requestCode == readRequestCode)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                Log.d("onMain", "Position: " + String.valueOf(positionReadArticle));
+                View v = listArticles.getChildAt(positionReadArticle
+                                                - listArticles.getFirstVisiblePosition());
+                CheckBox readToCheck = (CheckBox) v.findViewById(R.id.listCheckBox);
+                readToCheck.setChecked(data.getBooleanExtra(getResources()
+                        .getString(R.string.extraChecked), false));
+            }
+        }
     }
 
     //region MainInterfaces.View
@@ -168,20 +187,32 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
                               long arg3) {
         if (presenter == null) { return; }
 
+        positionReadArticle = position;
+
         Intent i = new Intent(this, ReadActivity.class);
 
         Log.d("onItemClicked", "Position: " + String.valueOf(position));
 
         Articles articleToRead = (Articles) mAdapter.getItem(position);
-        i.putExtra("Label", articleToRead.getTags().get(0).getLabel());
-        i.putExtra("Title", articleToRead.getTitle());
-        i.putExtra("Image", articleToRead.getImageUrl());
-        i.putExtra("Date", articleToRead.getDate());
-        i.putExtra("Author", getResources().getString(R.string.readWriten) + articleToRead.getAuthors());
-        i.putExtra("Website", getResources().getString(R.string.readOriginal) + articleToRead.getWebsite());
-        i.putExtra("Content", articleToRead.getContent());
+        i.putExtra(getResources().getString(R.string.extraLabel), articleToRead.getTags().get(0).getLabel());
+        i.putExtra(getResources().getString(R.string.extraTitle), articleToRead.getTitle());
+        i.putExtra(getResources().getString(R.string.extraImage), articleToRead.getImageUrl());
+        i.putExtra(getResources().getString(R.string.extraDate), articleToRead.getDate());
+        i.putExtra(getResources().getString(R.string.extraAuthor), getResources().getString(R.string.readWriten) + articleToRead.getAuthors());
+        i.putExtra(getResources().getString(R.string.extraWebsite), getResources().getString(R.string.readOriginal) + articleToRead.getWebsite());
+        i.putExtra(getResources().getString(R.string.extraContent), articleToRead.getContent());
+        i.putExtra(getResources().getString(R.string.extraChecked), articleToRead.getRead());
 
-        startActivityForResult(i, position);
+        if (Build.VERSION.SDK_INT > 21) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
+                    Pair.create(v.findViewById(R.id.listImage), "artImage"),
+                    Pair.create(v.findViewById(R.id.listTitle), "artTitle"),
+                    Pair.create(v.findViewById(R.id.ListAuthor), "artAuthor"),
+                    Pair.create(v.findViewById(R.id.listDate), "artDate"));
+            startActivityForResult(i, readRequestCode, options.toBundle());
+        }
+        else
+            startActivityForResult(i, readRequestCode);
     }
     //end region
 }

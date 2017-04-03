@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,15 +67,14 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipeLayout);
             swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
-            articlesItem.titleView      = (TextView) convertView.findViewById(R.id.title);
-            articlesItem.authorView     = (TextView) convertView.findViewById(R.id.author);
-            articlesItem.dateView       = (TextView) convertView.findViewById(R.id.date);
-            articlesItem.thumbImageView = (ImageView)convertView.findViewById(R.id.article_image);
-            articlesItem.checkView      = (CheckBox) convertView.findViewById(R.id.check_query);
+            articlesItem.titleView      = (TextView) convertView.findViewById(R.id.listTitle);
+            articlesItem.authorView     = (TextView) convertView.findViewById(R.id.ListAuthor);
+            articlesItem.dateView       = (TextView) convertView.findViewById(R.id.listDate);
+            articlesItem.thumbImageView = (ImageView)convertView.findViewById(R.id.listImage);
+            articlesItem.checkView      = (CheckBox) convertView.findViewById(R.id.listCheckBox);
             articlesItem.llView         = (LinearLayout) convertView.findViewById(R.id.bottomWrapper);
 
             convertView.setTag(articlesItem);
-            Log.d("onAdapter", "Position: " + String.valueOf(position));
         }
         else {
             articlesItem = (ArticlesViewHolder) convertView.getTag();
@@ -142,9 +139,8 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
         });
 
         // If the article was marked as "Read", perform a click to the show as read (gray)
-        // No duplicate calls realted in tests
         if (this.data.get(position).getRead()) {
-            articlesItem.checkView.performClick();
+            articlesItem.checkView.setChecked(true);
         }
 
         return convertView;

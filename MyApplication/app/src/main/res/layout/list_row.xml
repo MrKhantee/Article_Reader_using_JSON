@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true">
 
                 <android.support.v7.widget.AppCompatCheckBox
-                    android:id="@+id/check_query"
+                    android:id="@+id/listCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -66,7 +66,7 @@
             android:padding="4sp">
 
             <ImageView
-                android:id="@+id/article_image"
+                android:id="@+id/listImage"
                 android:layout_width="104sp"
                 android:layout_height="96sp"
                 android:background="@android:color/background_light"
@@ -77,14 +77,14 @@
 
         <!-- Title Of Article-->
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/listTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/thumbnail"
             android:layout_toEndOf="@+id/thumbnail"
             android:layout_toRightOf="@+id/thumbnail"
             android:layout_alignParentRight="true"
-            android:layout_above="@+id/date"
+            android:layout_above="@+id/listDate"
             android:paddingEnd="4sp"
             android:paddingRight="4sp"
             android:paddingStart="4sp"
@@ -97,7 +97,7 @@
 
         <!-- Website of Article -->
         <TextView
-            android:id="@+id/author"
+            android:id="@+id/ListAuthor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -109,15 +109,15 @@
 
         <!-- Date of Article -->
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/listDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/articleDate"
             android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:layout_above="@+id/author"
-            android:layout_alignLeft="@+id/author"
-            android:layout_alignStart="@+id/author" />
+            android:layout_above="@+id/ListAuthor"
+            android:layout_alignLeft="@+id/ListAuthor"
+            android:layout_alignStart="@+id/ListAuthor" />
 
         <!-- Arrow to read Article -->
         <!--<ImageView-->
