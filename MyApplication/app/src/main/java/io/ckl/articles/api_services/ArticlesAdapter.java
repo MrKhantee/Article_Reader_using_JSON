@@ -27,7 +27,7 @@ import io.realm.RealmConfiguration;
 /**
  * Created by Endy on 18/03/2017.
  */
-
+// Articles Adapter to be used with ListView
 public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
 
     private Context context;
@@ -44,6 +44,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
     }
 
     public static class ArticlesViewHolder {
+        SwipeLayout  swipeLayout;
         TextView     titleView;
         TextView     authorView;
         TextView     dateView;
@@ -64,8 +65,8 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
 
             articlesItem = new ArticlesViewHolder();
 
-            SwipeLayout swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipeLayout);
-            swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+            articlesItem.swipeLayout = (SwipeLayout) convertView.findViewById(R.id.swipeLayout);
+            articlesItem.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
 
             articlesItem.titleView      = (TextView) convertView.findViewById(R.id.listTitle);
             articlesItem.authorView     = (TextView) convertView.findViewById(R.id.ListAuthor);
@@ -80,7 +81,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             articlesItem = (ArticlesViewHolder) convertView.getTag();
         }
 
-        // Setting all widgets values in listview
+        // Setting all widgets values in ListView
         articlesItem.titleView.setText(this.data.get(position).getTitle());
         articlesItem.dateView.setText(this.data.get(position).getDate());
         articlesItem.authorView.setText(this.data.get(position).getAuthors());
@@ -96,31 +97,21 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
             }
         });
 
-        // The CheckedListener for the
+        // The "checked listener" for the CheckBox
         articlesItem.checkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-                Realm realm = Realm.getInstance(realmConfiguration);
 
-                Articles clickedArticle = realm.where(Articles.class).
-                        equalTo("title", articlesItem.titleView.getText().toString()).findFirst();
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        clickedArticle.setRead(isChecked);
-                    }
-                });
-                realm.close();
+                updateReadAtDB(isChecked, articlesItem.titleView.getText().toString());
 
                 if (isChecked)
                 {
+                    // If Read checked, turn the item gray
                     articlesItem.titleView.setTextColor(Color.GRAY);
                     articlesItem.authorView.setTextColor(Color.GRAY);
                     articlesItem.dateView.setTextColor(Color.GRAY);
 
-                    // Apply grayscale filter
+                    // Apply grayscale filter to the Image
                     ColorMatrix matrix = new ColorMatrix();
                     matrix.setSaturation(0);
                     ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
@@ -129,21 +120,42 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
                 }
                 else
                 {
+                    // If Read unchecked, return the item normal colors
                     articlesItem.titleView.setTextColor(Color.BLACK);
                     articlesItem.authorView.setTextColor(Color.RED);
                     articlesItem.dateView.setTextColor(Color.BLACK);
+
+                    // Return the Image color
                     articlesItem.thumbImageView.setColorFilter(null);
                     articlesItem.thumbImageView.setImageAlpha(255);
                 }
             }
         });
 
-        // If the article was marked as "Read", perform a click to the show as read (gray)
+        // If the article was already marked as "Read", set checked to show as read (gray)
         if (this.data.get(position).getRead()) {
             articlesItem.checkView.setChecked(true);
         }
 
         return convertView;
+    }
+
+
+    public static void updateReadAtDB (boolean checked, String title)
+    {
+        // Get the Database
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        Realm realm = Realm.getInstance(realmConfiguration);
+
+        // Update the info at the Database
+        Articles clickedArticle = realm.where(Articles.class).equalTo("title", title).findFirst();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                clickedArticle.setRead(checked);
+            }
+        });
+        realm.close();
     }
 
     //return the SwipeLayout resource id in the layout. -- Default from the SwipeLayout library

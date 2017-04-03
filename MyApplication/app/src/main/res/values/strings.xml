@@ -37,7 +37,7 @@
     <string name="readLabel">Tech</string>
     <string name="readTitle">New Amazing App Developed in Brazil</string>
     <string name="readDate">14/03/2017</string>
-    <string name="readWriten">Writen by:&#160;</string>
+    <string name="readWriten">Written by:&#160;</string>
     <string name="readAuthor">Endy Silveira</string>
     <string name="readOriginal">Original from:&#160;</string>
     <string name="readWebsite">Cheesecake News</string>
@@ -65,4 +65,10 @@
 
     <!--SplashScreen Default Strings-->
     <string name="errorString">Error:\n</string>
+    <string name="errorMessage">Message:&#160;</string>
+    <string name="errorStatus"> - Status:&#160;</string>
+    <string name="errorRequest">Request not Successful\n</string>
+    <string name="errorServer">\nCheck the server and try again…</string>
+    <string name="errorException">There is an error… Check the server and try again…</string>
+    <string name="errorNetwork">Check your network connection and try again…</string>
 </resources>
