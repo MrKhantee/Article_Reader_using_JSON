@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Boilerplate</string>
-    <string name="this_is_a_greeting_textview">This is a greeting textview</string>
-    <string name="greet_me">Greet Me!</string>
-</resources>
