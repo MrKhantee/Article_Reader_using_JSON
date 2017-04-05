@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.ckl.articles.modules.read.ReadActivity">
+
+    <ScrollView
+        android:id="@+id/readScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/readTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:padding="8sp"
+                    android:text="@string/readTitle"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/readImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200sp"
+                    android:background="@android:color/background_light"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:id="@+id/infoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8sp">
+
+                    <TextView
+                        android:id="@+id/readDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/readDate"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+                    <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
+
+                    <TextView
+                        android:id="@+id/readAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/readAuthor"
+                        android:textColor="@android:color/black"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:id="@+id/readWebsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/readWebsite"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="32sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/readContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8sp"
+                    android:text="@string/readContent"
+                    android:textColor="@android:color/black"
+                    android:textSize="48sp" />
+            </LinearLayout>
+
+            <!--android:textAppearance="@android:style/TextAppearance.Material.Headline"-->
+
+            <!--android:textAppearance="@android:style/TextAppearance.Material.Title"-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/readCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:buttonTint="@android:color/white"
+                    android:checked="false"
+                    android:text="@string/readMark"
+                    android:textColor="@android:color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
