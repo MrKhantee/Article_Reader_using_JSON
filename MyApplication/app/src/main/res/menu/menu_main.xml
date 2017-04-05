@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuSort"
+        android:checkable="false"
+        android:checked="false"
+        android:title="@string/menuSortBy"
+        app:showAsAction="always">
+        <!-- "file" submenu -->
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sortDate"
+                    android:title="@string/menuSortDate" />
+                <item
+                    android:id="@+id/sortWebsite"
+                    android:title="@string/menuSortWebsite" />
+                <item
+                    android:id="@+id/sortLabel"
+                    android:title="@string/menuSortLabel" />
+                <item
+                    android:id="@+id/sortTitle"
+                    android:title="@string/menuSortTitle" />
+                <item
+                    android:id="@+id/sortAuthor"
+                    android:title="@string/menuSortAuthor" />
+            </group>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sortDesc"
+                    android:checkable="true"
+                    android:title="@string/menuSortDescending" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
