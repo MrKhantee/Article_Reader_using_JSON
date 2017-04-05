@@ -8,25 +8,29 @@ import io.realm.RealmObject;
 /**
  * Created by Endy on 18/03/2017.
  */
-
+// Articles Database
 public class Articles extends RealmObject{
+    // Info the be fetched with the JSON
     private String title, website, authors, date, content, image_url;
-    private RealmList<Tags> tags;
+    private RealmList<Tags> tags;   // Tags Database list to be fetched (array inside array of JSON)
+
+    // Local info of Articles marked as "Read"
+    private boolean read;
 
     public Articles () {
-
     }
 
     public Articles (String title, String website, String authors, String date, String content,
-                     String image_url, RealmList<Tags> tags)
+                     String image_url, RealmList<Tags> tags, boolean read)
     {
-        this.title          = title;
-        this.website        = website;
-        this.authors        = authors;
-        this.date           = date;
-        this.content        = content;
-        this.image_url      = image_url;
-        this.tags           = tags;
+        this.title      = title;
+        this.website    = website;
+        this.authors    = authors;
+        this.date       = date;
+        this.content    = content;
+        this.image_url  = image_url;
+        this.tags       = tags;
+        this.read       = read;
     }
 
     public String getTitle() {
@@ -57,6 +61,8 @@ public class Articles extends RealmObject{
         return image_url;
     }
 
+    public boolean getRead() { return read;}
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -84,4 +90,6 @@ public class Articles extends RealmObject{
     public void setImageUrl(String imageUrl) {
         this.image_url = imageUrl;
     }
+
+    public void setRead(boolean read) {this.read = read;}
 }

@@ -1,5 +1,9 @@
 package io.ckl.articles.modules.read;
 
+import io.ckl.articles.models.Articles;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by Endy on 23/03/2017.
  */
@@ -28,7 +32,6 @@ public class ReadPresenter implements ReadInterfaces.Presenter {
 
 
     // region private
-
 
     // end region
 }
