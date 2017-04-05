@@ -7,14 +7,13 @@ import io.realm.RealmObject;
 /**
  * Created by Endy on 20/03/2017.
  */
-
+// Tags Database
 public class Tags extends RealmObject {
 
     private int id;
     private String label;
 
     public Tags () {
-
     }
 
     public Tags (int id, String label)

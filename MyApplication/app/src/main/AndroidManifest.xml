@@ -15,11 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".modules.main.MainActivity"
                   android:configChanges="orientation|keyboardHidden|screenSize">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".modules.read.ReadActivity"
@@ -41,6 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1316fb4fc5e27adb6143a8b2f192c85d36959d46" />
     </application>
 
 </manifest>

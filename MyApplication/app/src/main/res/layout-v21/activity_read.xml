@@ -32,8 +32,9 @@
                     android:text="@string/readTitle"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:textSize="48sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:transitionName="@string/transitionTitle"/>
 
                 <ImageView
                     android:id="@+id/readImage"
@@ -41,7 +42,8 @@
                     android:layout_height="200sp"
                     android:background="@android:color/background_light"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    android:transitionName="@string/transitionImage"/>
 
                 <LinearLayout
                     android:id="@+id/infoLayout"
@@ -57,7 +59,8 @@
                         android:layout_gravity="end"
                         android:text="@string/readDate"
                         android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        android:textSize="14sp"
+                        android:transitionName="@string/transitionDate"/>
                     <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
 
                     <TextView
@@ -65,8 +68,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/readAuthor"
-                        android:textColor="@android:color/black"
-                        android:textSize="32sp" />
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:transitionName="@string/transitionAuthor"/>
 
                     <TextView
                         android:id="@+id/readWebsite"
@@ -74,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/readWebsite"
                         android:textColor="@color/colorAccent"
-                        android:textSize="32sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <TextView
@@ -84,7 +88,8 @@
                     android:padding="8sp"
                     android:text="@string/readContent"
                     android:textColor="@android:color/black"
-                    android:textSize="48sp" />
+                    android:textSize="24sp" />
+
             </LinearLayout>
 
             <!--android:textAppearance="@android:style/TextAppearance.Material.Headline"-->
@@ -107,7 +112,7 @@
                     android:checked="false"
                     android:text="@string/readMark"
                     android:textColor="@android:color/white"
-                    android:textSize="32sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
