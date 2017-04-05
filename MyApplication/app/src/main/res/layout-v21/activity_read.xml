@@ -33,7 +33,8 @@
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:transitionName="@string/transitionTitle"/>
 
                 <ImageView
                     android:id="@+id/readImage"
@@ -41,7 +42,8 @@
                     android:layout_height="200sp"
                     android:background="@android:color/background_light"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_launcher"
+                    android:transitionName="@string/transitionImage"/>
 
                 <LinearLayout
                     android:id="@+id/infoLayout"
@@ -57,7 +59,8 @@
                         android:layout_gravity="end"
                         android:text="@string/readDate"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:transitionName="@string/transitionDate"/>
                     <!--android:textAppearance="@android:style/TextAppearance.Material.Small"-->
 
                     <TextView
@@ -65,8 +68,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/readAuthor"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:transitionName="@string/transitionAuthor"/>
 
                     <TextView
                         android:id="@+id/readWebsite"

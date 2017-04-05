@@ -30,7 +30,7 @@
             </group>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/sortDec"
+                    android:id="@+id/sortDesc"
                     android:checkable="true"
                     android:title="@string/menuSortDescending" />
             </group>

@@ -13,12 +13,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
- * This is a example presenter.
- *
- * The presenter holds a instance of the View, which is a interface implementation.
- * This view should be set as null whenever the activity reaches onDestroy().
- *
- * The presenter is responsible for the business logic, fetching models and telling the view to update.
+ * Created by Endy on 15/03/2017.
  */
 public class MainPresenter implements MainInterfaces.Presenter {
 
@@ -40,9 +35,11 @@ public class MainPresenter implements MainInterfaces.Presenter {
     public void onCreate() {
         mainPresenterContext = view.getViewContext();
 
+        // Get the Database
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(realmConfiguration);
 
+        // Get the Shared Preferences
         sortPref = mainPresenterContext.getSharedPreferences(
                 mainPresenterContext.getString(R.string.prefFile), Context.MODE_PRIVATE);
 
@@ -50,8 +47,8 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
     @Override
-    public void onArticleListPressed(String sortType, boolean decreasing) {
-        sortArticles(sortType, decreasing);
+    public void sortAticleList(String sortType, boolean descending) {
+        sortArticles(sortType, descending);
     }
 
     @Override
@@ -66,6 +63,7 @@ public class MainPresenter implements MainInterfaces.Presenter {
     // region private
 
     private void fillArrays() {
+        // Fill the ArrayList with the Info of the Database and sort it
         arrayArticles = new ArrayList<Articles>(realm.where(Articles.class).findAll());
 
         sortArticles(
@@ -76,12 +74,14 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-    private void sortArticles(String sortType, boolean decreasing) {
+    private void sortArticles(String sortType, boolean descending) {
         Collections.sort(arrayArticles, new Comparator<Articles>() {
             @Override
             public int compare(Articles o1, Articles o2) {
+                // Sort the ArrayList and set the Shared Preferences and Menu Title to the actual sort
+                //And sync the sorted ArrayList with the used with the MainActivity to show
 
-                if (decreasing) {
+                if (descending) {
                     Articles temp = o1;
                     o1 = o2;
                     o2 = temp;
@@ -112,11 +112,12 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
         SharedPreferences.Editor editor = sortPref.edit();
         editor.putString(mainPresenterContext.getString(R.string.prefKeySortBy), sortType);
-        editor.putBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc), decreasing);
+        editor.putBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc), descending);
         editor.apply();
 
-        view.setMenuTitle(sortType, decreasing);
+        view.setMenuTitle(sortType, descending);
 
+        // Sync the sorted ArrayList with the Main Screen
         view.fillList(arrayArticles);
     }
 
