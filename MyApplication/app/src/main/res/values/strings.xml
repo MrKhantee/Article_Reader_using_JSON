@@ -12,21 +12,34 @@
     <string name="read">Read</string>
 
     <string-array name="list_entries">
-        <item>Testing 0</item>
-        <item>Testing 1</item>
-        <item>Testing 2</item>
-        <item>Testing 3</item>
-        <item>Testing 4</item>
-        <item>Testing 5</item>
+        <item>Article 0</item>
+        <item>Article 1</item>
+        <item>Article 2</item>
+        <item>Article 3</item>
+        <item>Article 4</item>
+        <item>Article 5</item>
     </string-array>
+
+    <!--Sorting Menu Default Strings-->
+    <string name="menuSortBy">Sort by&#160;</string>
+    <string name="menuSortTitle">Title</string>
+    <string name="menuSortWebsite">Website</string>
+    <string name="menuSortAuthor">Author</string>
+    <string name="menuSortDate">Date</string>
+    <string name="menuSortLabel">Labels</string>
+    <string name="menuSortDescending">Descending</string>
+    <!--Sorting Preference Strings-->
+    <string name="prefFile">sortPref</string>
+    <string name="prefKeySortBy">sortBy</string>
+    <string name="prefKeySortDesc">sortOrder</string>
 
     <!--Article Read View Default Strings-->
     <string name="readLabel">Tech</string>
     <string name="readTitle">New Amazing App Developed in Brazil</string>
     <string name="readDate">14/03/2017</string>
-    <string name="readWriten">Writen by: </string>
+    <string name="readWriten">Written by:&#160;</string>
     <string name="readAuthor">Endy Silveira</string>
-    <string name="readOriginal">Original from: </string>
+    <string name="readOriginal">Original from:&#160;</string>
     <string name="readWebsite">Cheesecake News</string>
     <string name="readContent">Released in the Play Store early this year, a new
         revolutionary app allows you to read offline Articles that are available online!
@@ -34,14 +47,28 @@
     </string>
     <string name="readMark">Mark as Read</string>
 
-    <!--Menu Default Strings-->
-    <string name="menuSortBy">Sort by</string>
-    <string name="menuSortTitle">Title</string>
-    <string name="menuSortWebsite">Website</string>
-    <string name="menuSortAuthor">Author</string>
-    <string name="menuSortDate">Date</string>
-    <string name="menuSortLabel">Labels</string>
-    <string name="menuSortIncreasing">Increasing</string>
-    <string name="menuSortDecreasing">Decreasing</string>
+    <!--Intenet Extras Default Strings-->
+    <string name="extraLabel">extraLabel</string>
+    <string name="extraTitle">extraTitle</string>
+    <string name="extraImage">extraImage</string>
+    <string name="extraDate">extraDate</string>
+    <string name="extraAuthor">extraAuthor</string>
+    <string name="extraWebsite">extraWebsite</string>
+    <string name="extraContent">extraContent</string>
+    <string name="extraChecked">extraChecked</string>
 
+    <!--Shared Element Transition Default Strings-->
+    <string name="transitionImage">artImage</string>
+    <string name="transitionTitle">artTitle</string>
+    <string name="transitionDate">artDate</string>
+    <string name="transitionAuthor">artAuthor</string>
+
+    <!--SplashScreen Default Strings-->
+    <string name="errorString">Error:\n</string>
+    <string name="errorMessage">Message:&#160;</string>
+    <string name="errorStatus"> - Status:&#160;</string>
+    <string name="errorRequest">Request not Successful\n</string>
+    <string name="errorServer">\nCheck the server and try again…</string>
+    <string name="errorException">There is an error… Check the server and try again…</string>
+    <string name="errorNetwork">Check your network connection and try again…</string>
 </resources>

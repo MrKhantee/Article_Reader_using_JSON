@@ -14,7 +14,6 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/sortDate"
-                    android:checked="true"
                     android:title="@string/menuSortDate" />
                 <item
                     android:id="@+id/sortWebsite"
@@ -31,9 +30,9 @@
             </group>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/sortDec"
+                    android:id="@+id/sortDesc"
                     android:checkable="true"
-                    android:title="@string/menuSortDecreasing" />
+                    android:title="@string/menuSortDescending" />
             </group>
         </menu>
     </item>
