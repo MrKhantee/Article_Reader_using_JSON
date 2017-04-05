@@ -1,5 +1,7 @@
 package io.ckl.articles.modules.splash;
 
+import android.content.Context;
+
 import io.ckl.articles.modules.base.BaseInterfaces;
 
 /**
@@ -12,6 +14,9 @@ public class SplashInterfaces {
     }
 
     public interface View extends BaseInterfaces.View {
+        void startDownloadAnimation();
         void startMainActivity();
+        void showErrorMessage(String errorMessage);
+        Context getViewContext();
     }
 }
