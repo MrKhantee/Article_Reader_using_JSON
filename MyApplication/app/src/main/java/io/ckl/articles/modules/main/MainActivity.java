@@ -27,7 +27,7 @@ import io.ckl.articles.modules.base.BaseActivity;
 import io.ckl.articles.modules.read.ReadActivity;
 
 /**
- * Created by Endy on 15/03/2017.
+ * Created by Endy on 23/03/2017.
  */
 public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
@@ -58,6 +58,14 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setLogo(R.drawable.ic_articles_art);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         mAdapter = new ArticlesAdapter(this, arrayOfArticles);
     }
@@ -118,7 +126,7 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
                 return super.onOptionsItemSelected(item);
             default:
                 // If any other item is selected, do the sorting
-                presenter.onArticleListPressed(actualSortStringTag, menuDescending.isChecked());
+                presenter.sortAticleList(actualSortStringTag, menuDescending.isChecked());
                 return true;
         }
     }
@@ -167,14 +175,14 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
 
     @Override
     public void fillList(ArrayList<Articles> infoArticle) {
-        // Add the Articles on the Database to the ArrayList and start the list with the Adapter
+        // Add the Articles at the Database to the ArrayList and start the list with the Adapter
         if (infoArticle.isEmpty()) { return; }
 
         arrayOfArticles.clear();
         arrayOfArticles.addAll(infoArticle);
         listArticles.setAdapter(mAdapter);
 
-        setTitle(getResources().getString(R.string.app_name) + " (" + arrayOfArticles.size() + ")");
+        setTitle(" (" + arrayOfArticles.size() + ")");
     }
 
     @Override

@@ -13,8 +13,7 @@ import io.ckl.articles.modules.base.BaseInterfaces;
 public class MainInterfaces {
 
     public interface Presenter extends BaseInterfaces.Presenter {
-        void onArticleListPressed(String sortType, boolean decreasing);
-
+        void sortAticleList(String sortType, boolean descending);
     }
 
     public interface View extends BaseInterfaces.View {

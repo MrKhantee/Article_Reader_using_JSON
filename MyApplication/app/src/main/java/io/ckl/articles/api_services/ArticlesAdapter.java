@@ -101,7 +101,7 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
         articlesItem.checkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                // Update the info at the Database
                 updateReadAtDB(isChecked, articlesItem.titleView.getText().toString());
 
                 if (isChecked)
@@ -129,6 +129,8 @@ public class ArticlesAdapter extends ArraySwipeAdapter<Articles> {
                     articlesItem.thumbImageView.setColorFilter(null);
                     articlesItem.thumbImageView.setImageAlpha(255);
                 }
+
+                articlesItem.swipeLayout.close();
             }
         });
 

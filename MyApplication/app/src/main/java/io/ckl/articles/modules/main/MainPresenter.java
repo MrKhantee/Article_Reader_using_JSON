@@ -47,8 +47,8 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
     @Override
-    public void onArticleListPressed(String sortType, boolean decreasing) {
-        sortArticles(sortType, decreasing);
+    public void sortAticleList(String sortType, boolean descending) {
+        sortArticles(sortType, descending);
     }
 
     @Override
@@ -74,14 +74,14 @@ public class MainPresenter implements MainInterfaces.Presenter {
     }
 
 
-    private void sortArticles(String sortType, boolean decreasing) {
+    private void sortArticles(String sortType, boolean descending) {
         Collections.sort(arrayArticles, new Comparator<Articles>() {
             @Override
             public int compare(Articles o1, Articles o2) {
                 // Sort the ArrayList and set the Shared Preferences and Menu Title to the actual sort
                 //And sync the sorted ArrayList with the used with the MainActivity to show
 
-                if (decreasing) {
+                if (descending) {
                     Articles temp = o1;
                     o1 = o2;
                     o2 = temp;
@@ -112,10 +112,10 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
         SharedPreferences.Editor editor = sortPref.edit();
         editor.putString(mainPresenterContext.getString(R.string.prefKeySortBy), sortType);
-        editor.putBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc), decreasing);
+        editor.putBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc), descending);
         editor.apply();
 
-        view.setMenuTitle(sortType, decreasing);
+        view.setMenuTitle(sortType, descending);
 
         // Sync the sorted ArrayList with the Main Screen
         view.fillList(arrayArticles);
