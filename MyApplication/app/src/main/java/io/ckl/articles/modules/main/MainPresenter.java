@@ -1,23 +1,29 @@
 package io.ckl.articles.modules.main;
 
-import io.ckl.articles.api_services.GreetingAPIService;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import io.ckl.articles.R;
 import io.ckl.articles.models.Articles;
-import io.ckl.articles.models.Greeting;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
- * This is a example presenter.
- *
- * The presenter holds a instance of the View, which is a interface implementation.
- * This view should be set as null whenever the activity reaches onDestroy().
- *
- * The presenter is responsible for the business logic, fetching models and telling the view to update.
+ * Created by Endy on 15/03/2017.
  */
 public class MainPresenter implements MainInterfaces.Presenter {
 
     MainInterfaces.View view;
 
-    private String title, website, authors, date, art_content, label, imageUrl;
-    private Integer id;
+    private Context mainPresenterContext;
+
+    private Realm realm;
+    private SharedPreferences sortPref;
+    private ArrayList<Articles> arrayArticles = new ArrayList<>();
 
     public MainPresenter(MainInterfaces.View view) {
         this.view = view;
@@ -27,22 +33,27 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     @Override
     public void onCreate() {
-        greet();
-        fillArays();
+        mainPresenterContext = view.getViewContext();
+
+        // Get the Database
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        realm = Realm.getInstance(realmConfiguration);
+
+        // Get the Shared Preferences
+        sortPref = mainPresenterContext.getSharedPreferences(
+                mainPresenterContext.getString(R.string.prefFile), Context.MODE_PRIVATE);
+
+        fillArrays();
     }
 
     @Override
-    public void onGreetButtonPressed() {
-        greet();
-    }
-
-    @Override
-    public void onArticleListPressed() {
-        listArticles();
+    public void sortAticleList(String sortType, boolean descending) {
+        sortArticles(sortType, descending);
     }
 
     @Override
     public void onDestroy() {
+        realm.close();
         this.view = null;
     }
 
@@ -51,35 +62,63 @@ public class MainPresenter implements MainInterfaces.Presenter {
 
     // region private
 
-    private void fillArays() {
-        title = ("Obama Offers Hopeful Vision While Noting Nation's Fears");
-        website = ("MacStories");
-        authors = ("Graham Spencer");
-        date = ("05/26/2014");
-        art_content = ("In his last State of the Union address, President Obama sought to paint a" +
-                " hopeful portrait. But he acknowledged that many Americans felt shut out of a " +
-                "political and economic system they view as rigged.");
-        id = 1;
-        label = ("Politics");
-        imageUrl = ("http://res.cloudinary.com/cheesecakelabs/image/upload/v1488993901" +
-                "/challenge/news_01_illh01.jpg");
+    private void fillArrays() {
+        // Fill the ArrayList with the Info of the Database and sort it
+        arrayArticles = new ArrayList<Articles>(realm.where(Articles.class).findAll());
 
-        Articles testArticle = new Articles (title, website, authors, date, art_content,
-                label, imageUrl, id);
-
-        view.fillList(testArticle);
+        sortArticles(
+                sortPref.getString(mainPresenterContext.getString(R.string.prefKeySortBy),
+                        mainPresenterContext.getString(R.string.menuSortDate)),
+                sortPref.getBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc),
+                        false));
     }
 
 
-    private void greet() {
-        Greeting greeting = GreetingAPIService.fetchGreeting();
-        if (view == null) { return; }
-        //view.showGreeting(greeting.getContent());
-    }
+    private void sortArticles(String sortType, boolean descending) {
+        Collections.sort(arrayArticles, new Comparator<Articles>() {
+            @Override
+            public int compare(Articles o1, Articles o2) {
+                // Sort the ArrayList and set the Shared Preferences and Menu Title to the actual sort
+                //And sync the sorted ArrayList with the used with the MainActivity to show
 
-    private void listArticles() {
-        fillArays();
-        //view.showGreeting("Testing a new functiong");
+                if (descending) {
+                    Articles temp = o1;
+                    o1 = o2;
+                    o2 = temp;
+                }
+
+                if (sortType.equals(mainPresenterContext.getString(R.string.menuSortWebsite)))
+                {
+                    return o1.getWebsite().compareToIgnoreCase(o2.getWebsite());
+                }
+                else if (sortType.equals(mainPresenterContext.getString(R.string.menuSortLabel)))
+                {
+                    return o1.getTags().get(0).getLabel().compareTo(o2.getTags().get(0).getLabel());
+                }
+                else if (sortType.equals(mainPresenterContext.getString(R.string.menuSortTitle)))
+                {
+                    return o1.getTitle().compareTo(o2.getTitle());
+                }
+                else if (sortType.equals(mainPresenterContext.getString(R.string.menuSortAuthor)))
+                {
+                    return o1.getAuthors().compareTo(o2.getAuthors());
+                }
+                else  // If date, do the invert to get the newest (the higher date) first
+                {
+                    return o2.getDate().compareTo(o1.getDate());
+                }
+            }
+        });
+
+        SharedPreferences.Editor editor = sortPref.edit();
+        editor.putString(mainPresenterContext.getString(R.string.prefKeySortBy), sortType);
+        editor.putBoolean(mainPresenterContext.getString(R.string.prefKeySortDesc), descending);
+        editor.apply();
+
+        view.setMenuTitle(sortType, descending);
+
+        // Sync the sorted ArrayList with the Main Screen
+        view.fillList(arrayArticles);
     }
 
     // end region

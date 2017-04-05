@@ -1,82 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="5sp"
-    android:paddingBottom="20sp">
+    android:layout_height="match_parent">
 
-    <!--  ListRow Left - Thumbnail image -->
+    <!--Bottom View Start-->
+
     <LinearLayout
-        android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginEnd="5sp"
-        android:layout_marginRight="5sp"
-        android:background="@android:color/white"
-        android:padding="3sp">
+        android:id="@+id/bottomWrapper"
+        android:layout_width="96sp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="end">
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/listCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:buttonTint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/read"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
+    <!--Bottom View End-->
 
-    <!-- Title Of Article-->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toEndOf="@+id/thumbnail"
-        android:layout_toLeftOf="@+id/date"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:layout_toStartOf="@+id/date"
-        android:text="@string/articleTitle"
-        android:textColor="@color/colorPrimary"
-        android:textSize="15sp" />
-    <!--android:typeface="sans"-->
+    <!--Surface View Start-->
+    <RelativeLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5sp"
+        android:paddingBottom="20sp">
 
+    <!--  ListRow Left - Thumbnail image -->
+        <LinearLayout
+            android:id="@+id/thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent"
+            android:padding="4sp">
 
-    <!-- Website of Article -->
-    <TextView
-        android:id="@+id/website"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="1sp"
-        android:layout_toEndOf="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:text="@string/articleWebsite"
-        android:textColor="#ff0000"
-        android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/listImage"
+                android:layout_width="104sp"
+                android:layout_height="96sp"
+                android:background="@android:color/background_light"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_launcher" />
 
-    <!-- Date of Article -->
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="5sp"
-        android:layout_marginRight="5sp"
-        android:layout_centerVertical="true"
-        android:text="@string/articleDate"
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        </LinearLayout>
 
-    <!-- Arrow to read Article -->
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:src="@android:drawable/ic_media_play" />-->
+        <!-- Title Of Article-->
+        <TextView
+            android:id="@+id/listTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/listDate"
+            android:paddingEnd="4sp"
+            android:paddingRight="4sp"
+            android:paddingStart="4sp"
+            android:paddingLeft="4sp"
+            android:text="@string/articleTitle"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"
+            android:maxLines="3"
+            android:textStyle="bold"/>
 
-</RelativeLayout>
+        <!-- Website of Article -->
+        <TextView
+            android:id="@+id/ListAuthor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="@string/articleWebsite"
+            android:textColor="#ff0000"
+            android:textSize="12sp" />
+
+        <!-- Date of Article -->
+        <TextView
+            android:id="@+id/listDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/articleDate"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:layout_above="@+id/ListAuthor"
+            android:layout_alignLeft="@+id/ListAuthor"
+            android:layout_alignStart="@+id/ListAuthor" />
+
+        <!-- Arrow to read Article -->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:src="@android:drawable/ic_media_play" />-->
+
+    </RelativeLayout>
+    <!--Surface View End-->
+
+</com.daimajia.swipe.SwipeLayout>

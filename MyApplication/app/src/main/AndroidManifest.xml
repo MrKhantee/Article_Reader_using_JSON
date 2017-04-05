@@ -2,20 +2,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.ckl.articles">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".MainApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="io.ckl.articles.modules.main.MainActivity">
+        <activity android:name=".modules.main.MainActivity"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+        <activity
+            android:name=".modules.read.ReadActivity"
+            android:parentActivityName=".modules.main.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="modules.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".modules.splash.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1316fb4fc5e27adb6143a8b2f192c85d36959d46" />
     </application>
 
 </manifest>

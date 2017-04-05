@@ -1,24 +1,36 @@
 package io.ckl.articles.models;
 
+import java.util.List;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
 /**
  * Created by Endy on 18/03/2017.
  */
+// Articles Database
+public class Articles extends RealmObject{
+    // Info the be fetched with the JSON
+    private String title, website, authors, date, content, image_url;
+    private RealmList<Tags> tags;   // Tags Database list to be fetched (array inside array of JSON)
 
-public class Articles {
-    public String title, website, authors, date, art_content, label, imageUrl;
-    public int id;
+    // Local info of Articles marked as "Read"
+    private boolean read;
 
-    public Articles (String title, String website, String authors, String date, String art_content,
-                     String label, String imageUrl, int id)
+    public Articles () {
+    }
+
+    public Articles (String title, String website, String authors, String date, String content,
+                     String image_url, RealmList<Tags> tags, boolean read)
     {
-        this.title          = title;
-        this.website        = website;
-        this.authors        = authors;
-        this.date           = date;
-        this.art_content    = art_content;
-        this.label          = label;
-        this.imageUrl       = imageUrl;
-        this.id             = id;
+        this.title      = title;
+        this.website    = website;
+        this.authors    = authors;
+        this.date       = date;
+        this.content    = content;
+        this.image_url  = image_url;
+        this.tags       = tags;
+        this.read       = read;
     }
 
     public String getTitle() {
@@ -38,20 +50,18 @@ public class Articles {
     }
 
     public String getContent() {
-        return art_content;
+        return content;
     }
 
-    public String getLabel() {
-        return label;
+    public List<Tags> getTags() {
+        return tags;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return image_url;
     }
 
-    public int getId() {
-        return id;
-    }
+    public boolean getRead() { return read;}
 
     public void setTitle(String title) {
         this.title = title;
@@ -70,18 +80,16 @@ public class Articles {
     }
 
     public void setContent(String art_content) {
-        this.art_content = art_content;
+        this.content = art_content;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setTags(RealmList<Tags> tags) {
+        this.tags = tags;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        this.image_url = imageUrl;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setRead(boolean read) {this.read = read;}
 }
