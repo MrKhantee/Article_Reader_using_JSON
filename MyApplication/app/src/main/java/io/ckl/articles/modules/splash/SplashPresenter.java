@@ -1,5 +1,6 @@
 package io.ckl.articles.modules.splash;
 
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
@@ -7,10 +8,10 @@ import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.List;
 
+import io.ckl.articles.R;
 import io.ckl.articles.api_services.APIError;
 import io.ckl.articles.api_services.RetrofitArrayAPI;
 import io.ckl.articles.models.Articles;
-import io.ckl.articles.modules.read.ReadInterfaces;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.internal.IOException;
@@ -30,6 +31,8 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
 
     SplashInterfaces.View splashView;
 
+    private Context splashPresenterContext;
+
     private Realm realm;
 
     public SplashPresenter(SplashInterfaces.View splashView) {
@@ -40,11 +43,13 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
 
     @Override
     public void onCreate() {
+        splashPresenterContext = splashView.getViewContext();
+
+        // Get the Database
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(realmConfiguration);
 
-        Log.d("onSplash", "Started!");
-
+        // Start the download of Articles after verification
         downloadArticles();
     }
 
@@ -59,12 +64,12 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
 
     // region private
 
-    private void downloadArticles()
-    {
+    private void downloadArticles() {
         // Database number of Articles verification - Fixed at 6 because of the Project requirements
         if (realm.where(Articles.class).findAll().size() == 6) {
-            // If all the 6 the Articles were downloaded, start the Main Screen after 1.5 secs
-            int SPLASH_TIME_OUT = 1500;
+            // If all the 6 Articles were downloaded, start the Main Screen after 1 sec
+            int SPLASH_TIME_OUT = 1000;
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -91,10 +96,11 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
                     try {
                         // Check if the request was successful
                         if (response.isSuccessful()) {
+                            // List all the info fetched, store at database and start MainActivity
                             List<Articles> StudentData = response.body();
 
-                            Log.d("onCall", "Downloading");
-
+                        // If the number of articles could be changed, there should be more steps
+                        // Verifying which Articles was already at the Database for a right operation
                             realm.beginTransaction();
                             Collection<Articles> realmArticles = realm.copyToRealm(StudentData);
                             realm.commitTransaction();
@@ -102,44 +108,43 @@ public class SplashPresenter implements SplashInterfaces.Presenter {
                             splashView.startMainActivity();
                         }
                         else {
-                        // Not entered in all tests, but it's better to have this option if happens
-
-                            Log.d("onCall", "Not Success!");
-
+                        // Did not enter in all tests, but it's better to have this option
+                        // Get the error at the request and show it
                             Converter<ResponseBody, APIError> converter = retrofit
                                     .responseBodyConverter(APIError.class, new Annotation[0]);
 
                             APIError error;
-
                             try {
                                 error = converter.convert(response.errorBody());
                             } catch (IOException e) {
                                 error = new APIError();
                             }
 
-                            String errorMessage = "Message: " + error.message()
-                                    + " - Status: " + error.status();
-                            Log.d("onCall", errorMessage);
+                            String errorMessage = splashPresenterContext.getString(R.string.errorMessage) + error.message() + splashPresenterContext.getString(R.string.errorStatus)
+                                    + error.status();
 
-                            splashView.showErrorMessage("Request not Successful\n" + errorMessage
-                                    + "\nCheck the server and try again...");
+                            Log.d("onCall", errorMessage);
+                            splashView.showErrorMessage(splashPresenterContext.getString(R.string.errorRequest) + errorMessage +
+                                    splashPresenterContext.getString(R.string.errorServer));
                         }
                     } catch (Exception e) {
                         Log.d("onCall", "There is an error");
-                        splashView.showErrorMessage("There is an error... Check the server and try again...");
+                        splashView.showErrorMessage(
+                                splashPresenterContext.getString(R.string.errorException));
                         e.printStackTrace();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<Articles>> call, Throwable t) {
+                    // In the tests, only entered here when there was some network problem
+                    // Show the network error message
                     Log.d("onCall", t.getMessage());
-                    // t.getMessage() +
-                    splashView.showErrorMessage("Check your network connection and try again...");
+                    splashView.showErrorMessage(
+                            splashPresenterContext.getString(R.string.errorNetwork));
                 }
             });
         }
     }
-
     // end region
 }

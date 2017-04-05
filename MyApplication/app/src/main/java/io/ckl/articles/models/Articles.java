@@ -8,14 +8,16 @@ import io.realm.RealmObject;
 /**
  * Created by Endy on 18/03/2017.
  */
-
+// Articles Database
 public class Articles extends RealmObject{
+    // Info the be fetched with the JSON
     private String title, website, authors, date, content, image_url;
-    private RealmList<Tags> tags;
+    private RealmList<Tags> tags;   // Tags Database list to be fetched (array inside array of JSON)
+
+    // Local info of Articles marked as "Read"
     private boolean read;
 
     public Articles () {
-
     }
 
     public Articles (String title, String website, String authors, String date, String content,

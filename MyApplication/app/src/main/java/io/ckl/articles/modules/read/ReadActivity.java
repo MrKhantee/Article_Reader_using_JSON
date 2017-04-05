@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -17,11 +16,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import io.ckl.articles.R;
-import io.ckl.articles.models.Articles;
+import io.ckl.articles.api_services.ArticlesAdapter;
 import io.ckl.articles.modules.base.BaseActivity;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
+/**
+ * Created by Endy on 23/03/2017.
+ */
 public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
 
     ReadInterfaces.Presenter readPresenter = new ReadPresenter(this);
@@ -50,8 +50,10 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         setContentView(R.layout.activity_read);
         ButterKnife.bind(this);
 
+        // Set the result as First User to indicate that the "Mark as Read" was not clicked
         setResult(RESULT_FIRST_USER);
 
+        // Set all the Widgets info
         setTitle(getIntent().getStringExtra(getResources().getString(R.string.extraLabel)));
         readTitle.setText(getIntent().getStringExtra(getResources().getString(R.string.extraTitle)));
 
@@ -62,6 +64,7 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         readDate.setText(getIntent().getStringExtra(getResources().getString(R.string.extraDate)));
         readAuthor.setText(getIntent().getStringExtra(getResources().getString(R.string.extraAuthor)));
         readWebsite.setText(getIntent().getStringExtra(getResources().getString(R.string.extraWebsite)));
+
         readContent.setText(getIntent().getStringExtra(getResources().getString(R.string.extraContent)));
         readCheck.setChecked(getIntent().getBooleanExtra(getResources().getString(R.string.extraChecked), false));
 
@@ -74,15 +77,12 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
           readPresenter.onDestroy();
         }
         readPresenter = null;
-
         super.onDestroy();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        Log.d("onConfChanged", "Read Changed!");
     }
 
     @Override
@@ -99,35 +99,22 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         return super.onOptionsItemSelected(item);
     }
 
-    //region ReadInterfaces.View
-
-
-    //end region
-
-
     //region click listeners
 
     @OnCheckedChanged(R.id.readCheckBox)
     public void checkboxToggled (boolean isChecked) {
+        // Set the info about the "Mark as Read" to be synced with the Main Screen
+
+        // Set the checked state as an Extra to be used by the MainActivity
         Intent i = new Intent();
         i.putExtra(getResources().getString(R.string.extraChecked), isChecked);
+
+        // Set the result as OK to indicate that the "Mark as Read" was clicked
         setResult(RESULT_OK, i);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        Realm realm = Realm.getInstance(realmConfiguration);
-
-        Articles clickedArticle = realm.where(Articles.class).
-                equalTo("title", readTitle.getText().toString()).findFirst();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                clickedArticle.setRead(isChecked);
-            }
-        });
-        realm.close();
+        // Update the info at the Database
+        ArticlesAdapter.updateReadAtDB(isChecked, readTitle.getText().toString());
     }
-
 
     //end region
 }
