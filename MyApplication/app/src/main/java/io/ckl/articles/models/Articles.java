@@ -2,24 +2,35 @@ package io.ckl.articles.models;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
 /**
  * Created by Endy on 18/03/2017.
  */
-
-public class Articles {
+// Articles Database
+public class Articles extends RealmObject{
+    // Info the be fetched with the JSON
     private String title, website, authors, date, content, image_url;
-    private List<Tags> tags;
+    private RealmList<Tags> tags;   // Tags Database list to be fetched (array inside array of JSON)
+
+    // Local info of Articles marked as "Read"
+    private boolean read;
+
+    public Articles () {
+    }
 
     public Articles (String title, String website, String authors, String date, String content,
-                     String image_url, List<Tags> tags)
+                     String image_url, RealmList<Tags> tags, boolean read)
     {
-        this.title          = title;
-        this.website        = website;
-        this.authors        = authors;
-        this.date           = date;
+        this.title      = title;
+        this.website    = website;
+        this.authors    = authors;
+        this.date       = date;
         this.content    = content;
-        this.image_url       = image_url;
-        this.tags           = tags;
+        this.image_url  = image_url;
+        this.tags       = tags;
+        this.read       = read;
     }
 
     public String getTitle() {
@@ -50,6 +61,8 @@ public class Articles {
         return image_url;
     }
 
+    public boolean getRead() { return read;}
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -70,11 +83,13 @@ public class Articles {
         this.content = art_content;
     }
 
-    public void setTags(List<Tags> tags) {
+    public void setTags(RealmList<Tags> tags) {
         this.tags = tags;
     }
 
     public void setImageUrl(String imageUrl) {
         this.image_url = imageUrl;
     }
+
+    public void setRead(boolean read) {this.read = read;}
 }
