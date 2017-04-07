@@ -54,19 +54,20 @@ public class ReadActivity extends BaseActivity implements ReadInterfaces.View {
         setResult(RESULT_FIRST_USER);
 
         // Set all the Widgets info
-        setTitle(getIntent().getStringExtra(getResources().getString(R.string.extraLabel)));
-        readTitle.setText(getIntent().getStringExtra(getResources().getString(R.string.extraTitle)));
+        Intent receivedIntent = getIntent();
+        setTitle(receivedIntent.getStringExtra(getResources().getString(R.string.extraLabel)));
+        readTitle.setText(receivedIntent.getStringExtra(getResources().getString(R.string.extraTitle)));
 
         // There's no need to retry to download the Image, so the OFFLINE option can be used
-        Picasso.with(this).load(getIntent().getStringExtra(getResources().getString(R.string.extraImage)))
+        Picasso.with(this).load(receivedIntent.getStringExtra(getResources().getString(R.string.extraImage)))
                 .networkPolicy(NetworkPolicy.OFFLINE).fit().centerInside().into(readImage);
 
-        readDate.setText(getIntent().getStringExtra(getResources().getString(R.string.extraDate)));
-        readAuthor.setText(getIntent().getStringExtra(getResources().getString(R.string.extraAuthor)));
-        readWebsite.setText(getIntent().getStringExtra(getResources().getString(R.string.extraWebsite)));
+        readDate.setText(receivedIntent.getStringExtra(getResources().getString(R.string.extraDate)));
+        readAuthor.setText(receivedIntent.getStringExtra(getResources().getString(R.string.extraAuthor)));
+        readWebsite.setText(receivedIntent.getStringExtra(getResources().getString(R.string.extraWebsite)));
 
-        readContent.setText(getIntent().getStringExtra(getResources().getString(R.string.extraContent)));
-        readCheck.setChecked(getIntent().getBooleanExtra(getResources().getString(R.string.extraChecked), false));
+        readContent.setText(receivedIntent.getStringExtra(getResources().getString(R.string.extraContent)));
+        readCheck.setChecked(receivedIntent.getBooleanExtra(getResources().getString(R.string.extraChecked), false));
 
         readPresenter.onCreate();
     }

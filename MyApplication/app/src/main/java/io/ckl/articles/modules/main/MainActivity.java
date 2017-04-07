@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,9 +61,10 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         ButterKnife.bind(this);
 
         try {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setLogo(R.drawable.ic_articles_art);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            ActionBar ab = getSupportActionBar();
+            ab.setDisplayShowHomeEnabled(true);
+            ab.setLogo(R.drawable.ic_articles_art);
+            ab.setDisplayUseLogoEnabled(true);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -166,8 +168,9 @@ public class MainActivity extends BaseActivity implements MainInterfaces.View {
         if (menuSort.hasSubMenu()) {
             SubMenu sortOptions = menuSort.getSubMenu();
             for (int j = 0; j < sortOptions.size(); j++) {
-                if (sortOptions.getItem(j).getTitle().toString().compareTo(actualSortStringTag) == 0) {
-                    sortOptions.getItem(j).setChecked(true);
+                MenuItem testingItem = sortOptions.getItem(j);
+                if (testingItem.getTitle().toString().compareTo(actualSortStringTag) == 0) {
+                    testingItem.setChecked(true);
                 }
             }
         }
